@@ -1,3 +1,5 @@
+package proyecto_2_edd;
+
 class NodoArbol {
     String nombre;
     NodoArbol[] hijo; 
@@ -8,7 +10,7 @@ class NodoArbol {
     }
 }
 
-class Arbol {
+public class Arbol {
     NodoArbol raiz;
 
     public Arbol(String nombreRaiz, int numHijo){

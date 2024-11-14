@@ -1,3 +1,5 @@
+package proyecto_2_edd;
+
 class FamilyMember {
     String name;
     String[] bornTo;

@@ -1,3 +1,5 @@
+package proyecto_2_edd;
+
 public class Lista<T> {
         private NodoLista<T> pFirst;
         private NodoLista<T> pLast;

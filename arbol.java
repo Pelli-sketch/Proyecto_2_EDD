@@ -1,19 +1,20 @@
-class Nodo {
+class NodoArbol {
     String nombre;
-    Nodo[] hijo; 
+    NodoArbol[] hijo; 
 
-    public Nodo(String nombre, int numHijo) {
+    public NodoArbol(String nombre, int numHijo) {
     this.nombre = nombre; 
-    this.hijo = new Nodo[numHijo];
+    this.hijo = new NodoArbol[numHijo];
     }
 }
 
-class arbol {
-    Nodo raiz;
+class Arbol {
+    NodoArbol raiz;
 
-    public arbol(String nombreRaiz, int numHijo){
-        this.raiz = new Nodo(nombreRaiz, numHijo);
+    public Arbol(String nombreRaiz, int numHijo){
+        this.raiz = new NodoArbol(nombreRaiz, numHijo);
     }
 }
+
 
 

@@ -45,7 +45,8 @@ public class HashTable<T extends Comparable, Y> {
     }
 
 /** Funcion encargada de tomar el valor key (clave) y retornarlo como un Par,
- * en caso de encontrarlo, la función retorna el valor 
+ * en caso de encontrarlo, la función retorna la data del nodo buscado, en el 
+ * caso contrario de no ser encontrado, la función retorna null
  * @param clave
  * @return 
  */

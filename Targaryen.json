@@ -1,0 +1,343 @@
+{
+    "House Targaryen":[
+        {
+            "Aegon Targaryen":[
+                {"Of his name":"First"},
+                {"Born to":"[Unknown]"},
+                {"Known throughout as":"Aegon the Conqueror"},
+                {"Held title":"King of the Andals and the First Men, Lord of the Seven Kingdoms"},
+                {"Of eyes":"Purple"},
+                {"Of hair":"Silver"},
+                {"Father to":[
+                        "Aenys",
+                        "Maegor",
+                        "Baelon"
+                    ]
+                },
+                {"Notes":"Founder of House Targaryen"}
+            ]
+        },
+        {
+            "Aenys Targaryen":[
+                {"Of his name":"First"},
+                {"Born to":"Aegon the Conqueror"},
+                {"Known throughout as":"King Abomination"},
+                {"Held title":"King of the Andals and the First Men, Lord of the Seven Kingdoms"},
+                {"Of eyes":"Purple"},
+                {"Of hair":"Silver"},
+                {"Father to":[
+                        "Rhaena",
+                        "Aegon",
+                        "Viserys",
+                        "Jaehaerys",
+                        "Alysanne",
+                        "Vaella"
+                    ]
+                },
+                {"Fate":"Died fleeing the Faith Militant Uprising"}
+            ]
+        },
+        {
+            "Maegor Targaryen":[
+                {"Of his name":"First"},
+                {"Born to":"Aegon the Conqueror"},
+                {"Known throughout as":"Maegor the Cruel"},
+                {"Held title":"King of the Andals and the First Men, Lord of the Seven Kingdoms"},
+                {"Wed to":"The Black Brides"},
+                {"Of eyes":"Purple"},
+                {"Of hair":"Silver"},
+                {"Notes":"Rumored to be cursed to have no children"}
+            ]
+        },
+        {
+            "Baelon  Targaryen":[
+                {"Of his name":"First"},
+                {"Born to":"Aegon the Conqueror"},
+                {"Held title":"Lord of Dragonstone"},
+                {"Of eyes":"Purple"},
+                {"Of hair":"Silver"},
+                {"Notes":"Claim to being Aegon's heir, doubtful"}
+            ]
+        },
+        {
+            "Jaehaerys Targaryen":[
+                {"Of his name":"First"},
+                {"Born to":"Aenys Targaryen, First of his name"},
+                {"Known throughout as":"The Old King"},
+                {"Held title":"King of the Andals and the First Men, Lord of the Seven Kingdoms"},
+                {"Of eyes":"Purple"},
+                {"Of hair":"Silver"},
+                {"Father to":[
+                        "Alyssa",
+                        "Baelon",
+                        "Daella",
+                        "Vaegon",
+                        "Maegelle",
+                        "Viserra",
+                        "Saera",
+                        "Gael"
+                    ]
+                },
+                {"Notes":"Four additional children that died young including Daenerys Targaryen, First of her name"}
+            ]
+        },
+        {
+            "Viserys Targaryen":[
+                {"Of his name":"First"},
+                {"Born to":"Aegon the Conqueror"},
+                {"Of eyes":"Purple"},
+                {"Of hair":"Silver"},
+                {"Father to":[
+                        "Aegon",
+                        "Helaena",
+                        "Aemond",
+                        "Daeron"
+                    ]
+                },
+                {"Notes":"Not traditionally included in the numberings"}
+            ]
+        },
+        {
+            "Aegon Targaryen":[
+                {"Of his name":"Second"},
+                {"Born to":"Viserys Targaryen, First of his name"},
+                {"Of eyes":"Purple"},
+                {"Of hair":"Silver"}
+            ]
+        },
+        {
+            "Baelon Targaryen":[
+                {"Of his name":"Second"},
+                {"Born to":"Jaehaerys Targaryen, First of his name"},
+                {"Held title":"Hand of the King"},
+                {"Of eyes":"Purple"},
+                {"Of hair":"Silver"},
+                {"Father to":[
+                        "Viserys",
+                        "Daemon"
+                    ]
+                },
+                {"Notes":"His name would be forgotten by the time of the War of the Five Kings; but the manner of his death, would not"},
+                {"Fate":"Died of a burst belly"}
+            ]
+        },
+        {
+            "Viserys Targaryen":[
+                {"Of his name":"Second"},
+                {"Born to":"Baelon Targaryen, Second of his name"},
+                {"Held title":"King of the Andals and the First Men, Lord of the Seven Kingdoms"},
+                {"Of eyes":"Purple"},
+                {"Of hair":"Silver"}
+            ]
+        },
+        {
+            "Daemon Targaryen":[
+                {"Of his name":"First"},
+                {"Born to":"Baelon Targaryen, Second of his name"},
+                {"Held title":"Hand of the King"},
+                {"Of eyes":"Purple"},
+                {"Of hair":"Silver"},
+                {"Father to":[
+                        "Aegon",
+                        "Viserys"
+                    ]
+                }
+            ]
+        },
+        {
+            "Aegon Targaryen":[
+                {"Of his name":"Third"},
+                {"Born to":"Daemon Targaryen, First of his name"},
+                {"Held title":"King of the Andals and the First Men, Lord of the Seven Kingdoms"},
+                {"Of eyes":"Purple"},
+                {"Of hair":"Silver"},
+                {"Father to":[
+                        "Daeron",
+                        "Baelor"
+                    ]
+                }
+            ]
+        },
+        {
+            "Daeron Targaryen":[
+                {"Of his name":"First"},
+                {"Born to":"Aegon Targaryen, Third of his name"},
+                {"Known throughout as":"The Young Dragon"},
+                {"Held title":"King of the Andals and the First Men, Lord of the Seven Kingdoms"},
+                {"Of eyes":"Purple"},
+                {"Of hair":"Silver"}
+            ]
+        },
+        {
+            "Baelor Targaryen":[
+                {"Of his name":"First"},
+                {"Born to":"Aegon Targaryen, Third of his name"},
+                {"Known throughout as":"Baelor the Blessed"},
+                {"Held title":"King of the Andals and the First Men, Lord of the Seven Kingdoms"},
+                {"Of eyes":"Purple"},
+                {"Of hair":"Silver"}
+            ]
+        },
+        {
+            "Viserys Targaryen":[
+                {"Of his name":"Third"},
+                {"Born to":"Daemon Targaryen, First of his name"},
+                {"Held title":"King of the Andals and the First Men, Lord of the Seven Kingdoms"},
+                {"Of eyes":"Purple"},
+                {"Of hair":"Silver"},
+                {"Father to":[
+                        "Aegon",
+                        "Aemon",
+                        "Naerys"
+                    ]
+                }
+            ]
+        },
+        {
+            "Aegon Targaryen":[
+                {"Of his name":"Fourth"},
+                {"Born to":"Viserys Targaryen, Third of his name"},
+                {"Known throughout as":"Aegon the Unworthy"},
+                {"Held title":"King of the Andals and the First Men, Lord of the Seven Kingdoms"},
+                {"Wed to":"Naerys Targaryen"},
+                {"Of eyes":"Purple"},
+                {"Of hair":"Silver"},
+                {"Father to":[
+                        "Daeron",
+                        "Daenerys",
+                        "Daemon",
+                        "Aegor",
+                        "Brynden",
+                        "Shiera"
+                    ]
+                },
+                {"Notes":"The legitimacy of all his children is disputed"}
+            ]
+        },
+        {
+            "Daeron Targaryen":[
+                {"Of his name":"Second"},
+                {"Born to":"Aegon the Unworthy"},
+                {"Known throughout as":"Daeron the Good"},
+                {"Held title":"King of the Andals and the First Men, Lord of the Seven Kingdoms"},
+                {"Wed to":"Myriah Martell"},
+                {"Of eyes":"Purple"},
+                {"Of hair":"Silver"},
+                {"Father to":[
+                        "Baelor",
+                        "Aerys",
+                        "Rhaegel",
+                        "Maekar"
+                    ]
+                },
+                {"Notes":"Built a wheelchair for his crippled nephew"}
+            ]
+        },
+        {
+            "Baelor Targaryen":[
+                {"Of his name":"Second"},
+                {"Born to":"Daeron the Good"},
+                {"Known throughout as":"Baelor Breakspear"},
+                {"Of eyes":"Blue"},
+                {"Of hair":"Black"}
+            ]
+        },
+        {
+            "Aerys Targaryen":[
+                {"Of his name":"First"},
+                {"Born to":"Daeron the Good"},
+                {"Held title":"King of the Andals and the First Men, Lord of the Seven Kingdoms"},
+                {"Wed to":"Myriah Martell"},
+                {"Of eyes":"Purple"},
+                {"Of hair":"Silver"}
+            ]
+        },
+        {
+            "Maekar Targaryen":[
+                {"Of his name":"First"},
+                {"Born to":"Daeron the Good"},
+                {"Held title":"King of the Andals and the First Men, Lord of the Seven Kingdoms"},
+                {"Wed to":"Dyanna Dayne"},
+                {"Of eyes":"Purple"},
+                {"Of hair":"Silver"},
+                {"Father to":[
+                        "Daeron",
+                        "Aerion",
+                        "Aemon",
+                        "Aegon"
+                    ]
+                }
+            ]
+        },
+        {
+            "Aegon Targaryen":[
+                {"Of his name":"Fifth"},
+                {"Born to":"Daeron the Good"},
+                {"Held title":"King of the Andals and the First Men, Lord of the Seven Kingdoms"},
+                {"Wed to":"Dyanna Dayne"},
+                {"Of eyes":"Purple"},
+                {"Of hair":"Silver"},
+                {"Father to":[
+                        "Duncan",
+                        "Aerys",
+                        "Rhaella",
+                        "Daeron"
+                    ]
+                }
+            ]
+        },
+        {
+            "Aerys Targaryen":[
+                {"Of his name":"Second"},
+                {"Born to":"Daeron the Good"},
+                {"Known throughout as":"The Mad King"},
+                {"Held title":"King of the Andals and the First Men, Lord of the Seven Kingdoms"},
+                {"Wed to":"Rhaella Targaryen"},
+                {"Of eyes":"Purple"},
+                {"Of hair":"Silver"},
+                {"Father to":[
+                        "Rhaegar",
+                        "Viserys",
+                        "Daenerys"
+                    ]
+                },
+                {"Fate":"Slain by his Kingsguard to stop his Wildfire Plot"}
+            ]
+        },
+        {
+            "Rhaegar Targaryen":[
+                {"Of his name":"First"},
+                {"Born to":"Aerys Targaryen, Second of his name"},
+                {"Known throughout as":"The Last Dragon"},
+                {"Held title":"Prince of Dragonstone"},
+                {"Of eyes":"Purple"},
+                {"Of hair":"Silver"},
+                {"Father to":[
+                        "Rhaenys",
+                        "Aegon"
+                    ]
+                },
+                {"Fate":"Died during the Battle of the Trident"}
+            ]
+        },
+        {
+            "Aegon Targaryen":[
+                {"Of his name":"Sixth"},
+                {"Born to":"Rhaegar Targaryen, First of his name"},
+                {"Of eyes":"Blue"},
+                {"Of hair":"Black"},
+                {"Fate":"Lost during the Sack of King's Landing"}
+            ]
+        },
+        {
+            "Viserys Targaryen":[
+                {"Of his name":"First"},
+                {"Born to":"Aerys Targaryen, Second of his name"},
+                {"Known throughout as":"The Dragon"},
+                {"Of eyes":"Purple"},
+                {"Of hair":"Silver"},
+                {"Fate":"Executed by Khal Drogo with his own gold"}
+            ]
+        }
+    ]
+}

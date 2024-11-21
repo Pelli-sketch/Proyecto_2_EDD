@@ -12,7 +12,7 @@ package proyecto_2_edd;
  * Interfaz lista de elementos de tipo genérico
  * 
  */
-interface AList<T> {
+interface Alist<T> {
     /**
      * Método que retorna el tamaño de la lista
      * 
@@ -51,7 +51,7 @@ interface AList<T> {
      * @param valor el array a agregar
      * @return un array de booleanos
      */
-    boolean[] agregar(T[] valor);
+    void agregar(T[] valor);
 
     /**
      * Método que agrega una lista de elementos a la lista y devuelve un array de
@@ -60,7 +60,7 @@ interface AList<T> {
      * @param valor la lista a agregar
      * @return un array de booleanos
      */
-    boolean[] agregar(AList<T> valor);
+    void agregar(Alist<T> valor);
 
     /**
      * Método que retorna un elemento de la lista
@@ -91,7 +91,23 @@ interface AList<T> {
      * Método que vacía la lista
      */
     void vaciar();
+    
+    Alist<T> copiar();
+    
+    public boolean equals(Alist<T> list, AComparador<T> comparador);
 
+    public boolean equals(Alist<T> list);
+    
+    public void ordenar(AComparador<T> comparador);
+
+    public void ordenar();
+
+    public void invertir();
+
+    public int buscar(T valor, AComparador<T> comparador);
+
+    public int buscar(T valor);    
+    
     /**
      * Método que retorna un string con la representación de la lista
      * 

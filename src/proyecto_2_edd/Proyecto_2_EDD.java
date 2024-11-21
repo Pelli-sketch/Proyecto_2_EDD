@@ -9,6 +9,10 @@ package proyecto_2_edd;
  * @author sebma
  */
 public class Proyecto_2_EDD {
+    
+    public static final String DefaultDirectory = "./ArchivosProyecto/";
+    
+    ControladorApp controladorApp;
 
     public static void main(String[] args) {
         try {

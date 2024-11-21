@@ -12,7 +12,7 @@ public class Proyecto_2_EDD {
 
     public static void main(String[] args) {
         try {
-//            LectorJson.leerJson("Baratheon.json");
+            LectorJson.leerJson("Baratheon.json");
         } catch (Exception e) {
             System.out.println("Error: " + e.toString());
         }

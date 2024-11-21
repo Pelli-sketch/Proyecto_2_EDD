@@ -1,0 +1,253 @@
+{
+    "House Baratheon":[
+        {
+            "Orys Baratheon":[
+                {"Of his name":"First"},
+                {"Born to":"[Unknown]"},
+                {"Known throughout as":"Orys One-Hand"},
+                {"Held title":"Hand of the King"},
+                {"Wed to":"Argalia Durrandon"},
+                {"Of eyes":"Brown"},
+                {"Of hair":"Black"},
+                {"Father to":[
+                        "Axel",
+                        "Serac",
+                        "Mychal Raymont",
+                        "Ethelide",
+                        "Theresa"
+                    ]
+                },
+                {"Notes":"Founder of House Baratheon"},
+                {"Fate":"Died defending King Aegon Targaryen, First of his name, from an uprising"}
+            ]
+        },
+        {
+            "Axel Baratheon":[
+                {"Of his name":"First"},
+                {"Born to":"Orys One-Hand"},
+                {"Born to":"Argalia Durrandon"},
+                {"Held title":"Lord Paramount of the Stormlands"},
+                {"Wed to":"Alana Penrose"},
+                {"Of eyes":"Brown"},
+                {"Of hair":"Black"},
+                {"Fate":"Died in a duel with Steffon Trant, who had dishonored his wife, and therefore had no children."}
+            ]
+        },
+        {
+            "Serac Baratheon":[
+                {"Of his name":"First"},
+                {"Born to":"Orys One-Hand"},
+                {"Born to":"Argalia Durrandon"},
+                {"Held title":"Lord Paramount of the Stormlands"},
+                {"Wed to":"Monica Velaryon"},
+                {"Of eyes":"Brown"},
+                {"Of hair":"Black"},
+                {"Father to":[
+                        "Reginald",
+                        "William",
+                        "Steffon",
+                        "Padraic",
+                        "Flynn"
+                    ]
+                },
+                {"Notes":"Inherited title upon death of brother."}
+            ]
+        },
+        {
+            "Mychal Raymont Baratheon":[
+                {"Of his name":"First"},
+                {"Born to":"Orys One-Hand"},
+                {"Born to":"Argalia Durrandon"},
+                {"Held title":"Knight of the Kingsguard"},
+                {"Of eyes":"Brown"},
+                {"Of hair":"Black"},
+                {"Fate":"Died in his thirtieth year from wounds sustained preventing an assassination attempt on his royal grace, King Aenys Targaryen, First of his name."}
+            ]
+        },
+        {
+            "William Baratheon":[
+                {"Of his name":"First"},
+                {"Born to":"Serac Baratheon, First of his name"},
+                {"Born to":"Monica Velaryon"},
+                {"Held title":"Lord Paramount of the Stormlands"},
+                {"Wed to":"Martyna Mullendore"},
+                {"Of eyes":"Brown"},
+                {"Of hair":"Black"},
+                {"Father to":[
+                        "William",
+                        "Jon",
+                        "Martyn",
+                        "Mace",
+                        "Orys",
+                        "Theodor",
+                        "Bryte",
+                        "Tommax",
+                        "Brune",
+                        "Gude",
+                        "Lex",
+                        "Wineiri",
+                        "Miriam",
+                        "Argalia"
+                    ]
+                },
+                {"Fate":"Died of heart problems at sixty years old."}
+            ]
+        },
+        {
+            "William Baratheon":[
+                {"Of his name":"Second"},
+                {"Born to":"William Baratheon, First of his name"},
+                {"Born to":"Martyna Mullendore"},
+                {"Held title":"Lord Paramount of the Stormlands"},
+                {"Of eyes":"Brown"},
+                {"Of hair":"Black"},
+                {"Father to":[
+                    "Symeon"
+                    ]
+                }
+            ]
+        },
+        {
+            "Symeon Baratheon":[
+                {"Of his name":"Second"},
+                {"Born to":"William Baratheon, Second of his name"},
+                {"Wed to":"Meera"},
+                {"Held title":"Lord Paramount of the Stormlands"},
+                {"Of eyes":"Brown"},
+                {"Of hair":"Black"},
+                {"Father to":[
+                    "Lyonel"
+                    ]
+                }
+            ]
+        },
+        {
+            "Lyonel Baratheon":[
+                {"Of his name":"First"},
+                {"Born to":"Symeon Baratheon"},
+                {"Born to":"Meera"},
+                {"Known throughout as":"The Laughing Storm"},
+                {"Held title":"Knight of the Seven Kingdoms"},
+                {"Of eyes":"Brown"},
+                {"Of hair":"Black"},
+                {"Father to":[
+                        "Steffon"
+                    ]
+                }
+            ]
+        },
+        {
+            "Steffon Baratheon":[
+                {"Of his name":"Second"},
+                {"Born to":"The Laughing Storm"},
+                {"Of eyes":"Brown"},
+                {"Of hair":"Black"},
+                {"Father to":[
+                        "Ormund"
+                    ]
+                }
+            ]
+        },
+        {
+            "Ormund Baratheon":[
+                {"Of his name":"First"},
+                {"Born to":"Steffon Baratheon, Second of his name"},
+                {"Held title":"Hand of the King"},
+                {"Of eyes":"Brown"},
+                {"Of hair":"Black"},
+                {"Father to":[
+                        "Steffon"
+                    ]
+                },
+                {"Fate":"Died in his son's arms fighting at the Stepstones"}
+            ]
+        },
+        {
+            "Steffon Baratheon":[
+                {"Of his name":"Third"},
+                {"Born to":"Ormund Baratheon, First of his name"},
+                {"Wed to":"Cassandra Estermont"},
+                {"Held title":"Lord Paramount of the Stormlands"},
+                {"Of eyes":"Brown"},
+                {"Of hair":"Black"},
+                {"Father to":[
+                        "Robert",
+                        "Stannis",
+                        "Renly"
+                    ]
+                },
+                {"Fate":"Died with his wife when their ship, the Windproud, sank in Shipbreaker Bay"}
+            ]
+        },
+        {
+            "Robert Baratheon":[
+                {"Of his name":"First"},
+                {"Born to":"Steffon Baratheon, Third of his name"},
+                {"Known throughout as":"The Usurper"},
+                {"Held title":"King of the Andals and the First Men, Lord of the Seven Kingdoms"},
+                {"Wed to":"Cersei Lannister"},
+                {"Of eyes":"Brown"},
+                {"Of hair":"Black"},
+                {"Father to":[
+                        "Unnamed Son",
+                        "Joffrey",
+                        "Myrcella",
+                        "Tommen"
+                    ]
+                },
+                {"Notes":"Seven known bastards, not recognized"},
+                {"Fate":"Died as a result of a hunting accident"}
+            ]
+        },
+        {
+            "Stannis Baratheon":[
+                {"Of his name":"First"},
+                {"Born to":"Steffon Baratheon, Third of his name"},
+                {"Held title":"Lord of Dragonstone"},
+                {"Wed to":"Selyse Florent"},
+                {"Of eyes":"Brown"},
+                {"Of hair":"Black"},
+                {"Father to":[
+                        "Shireen Baratheon"
+                    ]
+                },
+                {"Fate":"Died during the Battle in the Ice"}
+            ]
+        },
+        {
+            "Renly Baratheon":[
+                {"Of his name":"First"},
+                {"Born to":"Steffon Baratheon, Third of his name"},
+                {"Held title":"Lord Paramount of the Stormlands"},
+                {"Of eyes":"Brown"},
+                {"Of hair":"Black"},
+                {"Fate":"Murdered in his chambers"}
+            ]
+        },
+        {
+            "Joffrey Baratheon":[
+                {"Of his name":"First"},
+                {"Born to":"Robert Baratheon, First of his name"},
+                {"Born to":"Cersei Lannister"},
+                {"Held title":"King of the Andals and the First Men, Lord of the Seven Kingdoms"},
+                {"Wed to":"Margaery Tyrell"},
+                {"Of eyes":"Green"},
+                {"Of hair":"Golden"},
+                {"Notes":"At no point did Joffrey control all of the Seven Kingdoms"},
+                {"Fate":"Poisoned by his own small council before consumating his marriage"}
+            ]
+        },
+        {
+            "Tommen Baratheon":[
+                {"Of his name":"First"},
+                {"Born to":"Robert Baratheon, First of his name"},
+                {"Born to":"Cersei Lannister"},
+                {"Held title":"King of the Andals and the First Men, Lord of the Seven Kingdoms"},
+                {"Wed to":"Margaery Tyrell"},
+                {"Of eyes":"Green"},
+                {"Of hair":"Golden"},
+                {"Fate":"Died during the Destruction of the Great Sept of Baelor"}
+            ]
+        }
+    ]
+}

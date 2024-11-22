@@ -238,14 +238,14 @@ public class ControladorApp {
 
         // Limpiamos el gráfico
         this.graph.clear();
-        // obtenemos todos los antepasados del lord
+        // obtenemos todos los antepasados del Amo
         ListaEnlazada<A_Arbol<Amo>> antepasados = this.arbolCasa.getAscends(amo);
         if (antepasados.vacia()) {
             return;
         }
 
         // necesitamos un arreglo de ids de nodos para los antepasados
-        // al igual que con el loadTreeGraph, los ids serán uniqueName:alias
+        // al igual que con el cargarArbolGraph, los ids serán uniqueName:alias
         // ya que me permite poder hacer luego busquedas en el hashTable
         // ya sea por uniqueName o por alias haciendo solamente un split
         // de uniqueName:alias por el ":".

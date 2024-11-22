@@ -50,7 +50,7 @@ public class Casa {
         this.name = this.fullname.split(" ", 2)[1];
         this.name = this.name.strip();
 
-        // El resto del json para obtener los lords a partir de los objetos json de cada
+        // El resto del json para obtener los amos a partir de los objetos json de cada
         // uno.
         json = data[1].strip();
 
@@ -64,9 +64,9 @@ public class Casa {
         // Quitamos los espacios.
         json = json.strip();
 
-        // Vamos a separar cada objeto json que representa a cada lord,
+        // Vamos a separar cada objeto json que representa a cada amo,
         // con un carácter especial, para luego poder hacer un split
-        // y tener el json de cada lord.
+        // y tener el json de cada amo.
         int numLLaves = 0;
         String jsonTxt = "";
         for (int i = 0; i < json.length(); i++) {
@@ -83,8 +83,8 @@ public class Casa {
             jsonTxt += json.charAt(i);
         }
 
-        // Ahora que tenemos todos los json de cada lord, los vamos a
-        // agregar a la lista de lords
+        // Ahora que tenemos todos los json de cada amo, los vamos a
+        // agregar a la lista de amos
         String[] jsonArray = jsonTxt.split("//");
         for (int i = 0; i < jsonArray.length; i++) {
             Amo amo = new Amo(jsonArray[i]);

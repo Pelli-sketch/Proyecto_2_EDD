@@ -107,7 +107,7 @@ public class ControladorApp {
             this.arbolCasa.setComparador(Amo.comparadorNombreFull);
             padres = this.arbolCasa.buscar(amoPadre);
             if (padres.size() > 1) {
-                throw new RuntimeException("Error en la carga del árbol, hay mas de un padre de " + lord.name);
+                throw new RuntimeException("Error en la carga del árbol, hay mas de un padre de " + amo.name);
             }
             if (padres.size() == 1) {
                 // Si se encontró lo agregamos como hizo del padre encontrado.
@@ -119,7 +119,7 @@ public class ControladorApp {
             }
 
             // Si llegó aquí, no se encontró el padre.
-            throw new RuntimeException("Error en la carga del árbol, el padre de " + lord.name
+            throw new RuntimeException("Error en la carga del árbol, el padre de " + amo.name
                     + " no se encuentra en el árbol.");
         }
     }
@@ -184,7 +184,7 @@ public class ControladorApp {
             // para que este por debajo de su padre, y el x calculado sumándole al x el
             // xStepSize, así cada hijo se va a ir moviendo hacia la derecha y todos
             // centrados con respecto a su padre.
-            this.loadTreeGraph(hijos.get(i), nodeId, x, y - yStepSize, xStepSize, yStepSize);
+            this.cargarArbolGraph(hijos.get(i), nodeId, x, y - yStepSize, xStepSize, yStepSize);
             x += xStepSize;
         }
     }
@@ -206,7 +206,7 @@ public class ControladorApp {
         int xStepSize = ControladorApp.GRAPH_WIDTH / maxNumGen;
 
         // ahora hago la llamada recursiva para cargar el grafo de graphStream.
-        this.loadTreeGraph(amo, null, 0, 0, xStepSize, yStepSize);
+        this.cargarArbolGraph(amo, null, 0, 0, xStepSize, yStepSize);
 
         // Y le doy estilo a los nodos y aristas
         String css = "node {" +

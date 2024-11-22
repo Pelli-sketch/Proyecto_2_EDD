@@ -345,6 +345,7 @@ public class Amo {
         }
         return -1;
     };
+    
     public static AComparador<Amo> comparadorTitleComienzaPor = (Amo a, Amo b) -> {
         if (a.title == null && b.title == null) {
             return -1;

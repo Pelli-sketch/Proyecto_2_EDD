@@ -8,7 +8,7 @@ package proyecto_2_edd;
  *
  * @author pablo
  */
-public interface AHash {
+public interface AHash<T> {
     
     void setTam(int tam);
     

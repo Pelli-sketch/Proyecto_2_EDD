@@ -124,7 +124,7 @@ public class Casa {
     public String toString() {
         String txt = this.HOUSE_TITLE + ": " + this.name + "\n";
         for (int i = 0; i < this.amos.size(); i++) {
-            String[] lines = this.amos.get(i).completeDataToString().split("\n");
+            String[] lines = this.amos.get(i).DataImplementsToString().split("\n");
             for (int j = 0; j < lines.length; j++) {
                 txt += "\t" + lines[j] + "\n";
             }

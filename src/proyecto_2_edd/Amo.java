@@ -255,7 +255,7 @@ public class Amo {
         }
         return false;
     }
-    public String completeDataToString() {
+    public String DataImplementsToString() {
         String txt = "";
         if (!this.isValid) {
             txt = Amo.LORD_TITLE + ": null\n";

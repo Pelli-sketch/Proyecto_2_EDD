@@ -15,7 +15,7 @@ class NodoArbol {
     }
 }
 
-public class Arbol<T> implements A_Arbol {
+public class Arbol<T> implements A_Arbol<T> {
     
     private static AComparador<String> comparadorString = (String a, String b) -> a.compareTo(b);
     
@@ -77,17 +77,38 @@ public class Arbol<T> implements A_Arbol {
     public T getValor() {
         return this.valor;
     }
+    
     @Override
     public void setValor(T valor) {
         this.valor = valor;
         this.guessComparador();
     }
+    
     @Override
     public Arbol<T> getRaiz() {
         return this;
     }
+    
     @Override
-    public boolean agregarHijo(A_Arbol<T> hijo) {
+    public int numElements() {
+        if (this.hijos.vacia()) {
+            if (this.vacio()) {
+                return 0;
+            }
+            return 1;
+        }
+        int sumElementos = 0;
+        for (int i = 0; i < this.hijos.size(); i++) {
+            sumElementos += this.hijos.get(i).numElements();
+        }
+        if (this.valor == null) {
+            return sumElementos;
+        }
+        return sumElementos + 1;
+    }
+    
+    @Override
+    public boolean addHijo(A_Arbol<T> hijo) {
         if (hijo == null) {
             return false;
         }
@@ -106,7 +127,7 @@ public class Arbol<T> implements A_Arbol {
         this.comparador = comparador;
     }
     @Override
-    public ListaEnlazada<A_Arbol<T>> buscarHijo(T valor) {
+    public ListaEnlazada<A_Arbol<T>> searchHijo(T valor) {
         if (this.comparador == null) {
             throw new RuntimeException("No se ha definido un comparador");
         }
@@ -120,7 +141,7 @@ public class Arbol<T> implements A_Arbol {
         return encontrados;
     }
     @Override
-    public ListaEnlazada<A_Arbol<T>> buscar(T valor) {
+    public ListaEnlazada<A_Arbol<T>> search(T valor) {
         if (this.comparador == null) {
             throw new RuntimeException("No se ha definido un comparador");
         }
@@ -143,57 +164,57 @@ public class Arbol<T> implements A_Arbol {
         return encontrados;
     }
     @Override
-    public int altura() {
+    public int height() {
         if (this.hijos.size() == 0) {
             return 1;
         }
         int maxAltura = 0;
         for (int i = 0; i < this.hijos.size(); i++) {
-            int alturaHijo = this.hijos.get(i).altura();
+            int alturaHijo = this.hijos.get(i).height();
             if (alturaHijo > maxAltura) {
                 maxAltura = alturaHijo;
             }
         }
         return maxAltura + 1;
     }
-    private void getNiveles(int nivel, ListaEnlazada<A_Arbol<T>>[] niveles) {
-        niveles[nivel].agregar(this);
+    private void getLevels(int level, ListaEnlazada<A_Arbol<T>>[] levels) {
+        levels[level].agregar(this);
         for (int i = 0; i < this.hijos.size(); i++) {
             Arbol<T> hijo = (Arbol<T>) this.hijos.get(i);
-            hijo.getNiveles(nivel + 1, niveles);
+            hijo.getLevels(level + 1, levels);
         }
     }    
     @SuppressWarnings("unchecked")
     @Override
-    public ListaEnlazada<A_Arbol<T>>[] getNiveles() {
-        ListaEnlazada<A_Arbol<T>>[] niveles = new ListaEnlazada[this.altura()];
-        for (int i = 0; i < niveles.length; i++) {
-            niveles[i] = new ListaEnlazada<>();
+    public ListaEnlazada<A_Arbol<T>>[] getLevels() {
+        ListaEnlazada<A_Arbol<T>>[] levels = new ListaEnlazada[this.height()];
+        for (int i = 0; i < levels.length; i++) {
+            levels[i] = new ListaEnlazada<>();
         }
-        this.getNiveles(0, niveles); // Llamada recursiva
-        return niveles;
+        this.getLevels(0, levels); // Llamada recursiva
+        return levels;
     }
-    private void getNivel(int nivelActual, ListaEnlazada<A_Arbol<T>> elementosNivel, int nivelDeseado) {
-        if (nivelActual == nivelDeseado) {
-            elementosNivel.agregar(this);
+    private void getLevel(int levelActual, ListaEnlazada<A_Arbol<T>> levelElements, int levelDeseado) {
+        if (levelActual == levelDeseado) {
+            levelElements.agregar(this);
             return;
         }
         for (int i = 0; i < this.hijos.size(); i++) {
             Arbol<T> hijo = (Arbol<T>) this.hijos.get(i);
-            hijo.getNivel(nivelActual + 1, elementosNivel, nivelDeseado);
+            hijo.getLevel(levelActual + 1, levelElements, levelDeseado);
         }
     }
     @Override
-    public ListaEnlazada<A_Arbol<T>> getNivel(int nivel) {
-        if (nivel < 0 || nivel >= this.altura()) {
+    public ListaEnlazada<A_Arbol<T>> getLevel(int level) {
+        if (level < 0 || level >= this.height()) {
             return null;
         }
-        ListaEnlazada<A_Arbol<T>> elementosNivel = new ListaEnlazada<>();
-        this.getNivel(0, elementosNivel, nivel); // Llamada recursiva
-        return elementosNivel;
+        ListaEnlazada<A_Arbol<T>> levelElements = new ListaEnlazada<>();
+        this.getLevel(0, levelElements, level); // Llamada recursiva
+        return levelElements;
     }
     @Override
-    public ListaEnlazada<A_Arbol<T>> getAscendentes(A_Arbol<T> arbol) {
+    public ListaEnlazada<A_Arbol<T>> getAscends(A_Arbol<T> arbol) {
         if (arbol == null) {
             return null;
         }
@@ -204,56 +225,56 @@ public class Arbol<T> implements A_Arbol {
             return null;
         }
         for (int i = 0; i < this.hijos.size(); i++) {
-            ListaEnlazada<A_Arbol<T>> ascendentes = this.hijos.get(i).getAscendentes(arbol);
-            if (ascendentes == null) {
+            ListaEnlazada<A_Arbol<T>> ascends = this.hijos.get(i).getAscends(arbol);
+            if (ascends == null) {
                 continue;
             }
-            ascendentes.insertar(0, this);
-            return ascendentes;
+            ascends.insertar(0, this);
+            return ascends;
         }
         return null;
     }
     @Override
-    public ListaEnlazada<A_Arbol<T>> getDescendientes(A_Arbol<T> arbol) {
+    public ListaEnlazada<A_Arbol<T>> getDescends(A_Arbol<T> arbol) {
         if (arbol == null) {
             return null;
         }
-        ListaEnlazada<A_Arbol<T>> descendientes = new ListaEnlazada<>();
-        ListaEnlazada<A_Arbol<T>>[] niveles = arbol.getNiveles();
-        if (niveles.length <= 1) {
-            return descendientes;
+        ListaEnlazada<A_Arbol<T>> descends = new ListaEnlazada<>();
+        ListaEnlazada<A_Arbol<T>>[] levels = arbol.getLevels();
+        if (levels.length <= 1) {
+            return descends;
         }
-        for (int i = 1; i < niveles.length; i++) {
-            for (int j = 0; j < niveles[i].size(); j++) {
-                descendientes.agregar(niveles[i].get(j));
+        for (int i = 1; i < levels.length; i++) {
+            for (int j = 0; j < levels[i].size(); j++) {
+                descends.agregar(levels[i].get(j));
             }
         }
-        return descendientes;
+        return descends;
     }
     @Override
-    public int getNumNiveL(A_Arbol<T> arbol) {
+    public int getNumLevel(A_Arbol<T> arbol) {
         if (arbol == null) {
             return -1;
         }
-        ListaEnlazada<A_Arbol<T>> ascendentes = this.getAscendentes(arbol);
-        if (ascendentes == null) {
+        ListaEnlazada<A_Arbol<T>> ascends = this.getAscends(arbol);
+        if (ascends == null) {
             return -1;
         }
-        return ascendentes.size();
+        return ascends.size();
     }
     @Override
     public A_Arbol<T> getPadre(A_Arbol<T> arbol) {
         if (arbol == null) {
             return null;
         }
-        ListaEnlazada<A_Arbol<T>> ascendentes = this.getAscendentes(arbol);
-        if (ascendentes == null) {
+        ListaEnlazada<A_Arbol<T>> ascends = this.getAscends(arbol);
+        if (ascends == null) {
             return null;
         }
-        if (ascendentes.vacia()) {
+        if (ascends.vacia()) {
             return null;
         }
-        return ascendentes.get(ascendentes.size() - 1);
+        return ascends.get(ascends.size() - 1);
     }
     @Override
     public String toString() {
@@ -273,13 +294,13 @@ public class Arbol<T> implements A_Arbol {
         txt += "]";
         return txt;
     }
-    private void vaciar(int nivel) {
+    private void vaciar(int level) {
         this.valor = null;
         for (int i = 0; i < this.hijos.size(); i++) {
             Arbol<T> hijo = (Arbol<T>) this.hijos.get(i);
-            hijo.vaciar(nivel + 1);
+            hijo.vaciar(level + 1);
         }
-        if (nivel > 0) {
+        if (level > 0) {
             this.hijos = null;
         }
         this.hijos = new ListaEnlazada<>();
@@ -289,13 +310,13 @@ public class Arbol<T> implements A_Arbol {
         this.vaciar(0);
     }
     @Override
-    public String nivelesToString() {
+    public String levelsToString() {
         String txt = "";
-        ListaEnlazada<A_Arbol<T>>[] niveles = this.getNiveles();
-        for (int i = 0; i < niveles.length; i++) {
-            for (int j = 0; j < niveles[i].size(); j++) {
-                txt += niveles[i].get(j).toString();
-                if (j < niveles[i].size() - 1) {
+        ListaEnlazada<A_Arbol<T>>[] levels = this.getLevels();
+        for (int i = 0; i < levels.length; i++) {
+            for (int j = 0; j < levels[i].size(); j++) {
+                txt += levels[i].get(j).toString();
+                if (j < levels[i].size() - 1) {
                     txt += "\t";
                 }
             }

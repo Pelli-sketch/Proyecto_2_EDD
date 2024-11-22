@@ -58,7 +58,7 @@ public class ControladorApp {
             // creamos el sub-árbol del amo.
             Arbol<Amo> amoArbol = new Arbol<>(amo);
 
-            // insertamos el sub-árbol del lord en las hashTables
+            // insertamos el sub-árbol del amo en las hashTables
             if (amo.uniqueName != null) {
                 this.hashTableUniqueName.insertar(amo.uniqueName, amoArbol);
             }    
@@ -75,7 +75,7 @@ public class ControladorApp {
 
             // Buscamos por el alias a ver si es el que necesitamos
             this.arbolCasa.setComparador(Amo.comparadorAlias);
-            ListaEnlazada<A_Arbol<Amo>> padres = this.arbolCasa.buscar(amoPadre);
+            ListaEnlazada<A_Arbol<Amo>> padres = this.arbolCasa.search(amoPadre);
             if (padres.size() > 1) {
                 throw new RuntimeException("Error en la carga del árbol, hay mas de un padre de " + amo.name);
             }
@@ -83,14 +83,14 @@ public class ControladorApp {
                 // Si lo encontramos lo agregamos como hizo del padre encontrado.
                 Arbol<Amo> padre = (Arbol<Amo>) padres.get(0);
                 if (padre != null) {
-                    padre.agregarHijo(amoArbol);
+                    padre.addHijo(amoArbol);
                     continue;
                 }
             }
 
             // Buscamos por el nombre único a ver si es el que necesitamos
             this.arbolCasa.setComparador(Amo.comparadorNombreUnico);
-            padres = this.arbolCasa.buscar(amoPadre);
+            padres = this.arbolCasa.search(amoPadre);
             if (padres.size() > 1) {
                 throw new RuntimeException("Error en la carga del árbol, hay mas de un padre de " + amo.name);
             }
@@ -98,14 +98,14 @@ public class ControladorApp {
                 // Si lo encontramos lo agregamos como hizo del padre encontrado.
                 Arbol<Amo> padre = (Arbol<Amo>) padres.get(0);
                 if (padre != null) {
-                    padre.agregarHijo(amoArbol);
+                    padre.addHijo(amoArbol);
                     continue;
                 }
             }
 
             // Buscamos por el nombre completo
             this.arbolCasa.setComparador(Amo.comparadorNombreFull);
-            padres = this.arbolCasa.buscar(amoPadre);
+            padres = this.arbolCasa.search(amoPadre);
             if (padres.size() > 1) {
                 throw new RuntimeException("Error en la carga del árbol, hay mas de un padre de " + amo.name);
             }
@@ -113,7 +113,7 @@ public class ControladorApp {
                 // Si se encontró lo agregamos como hizo del padre encontrado.
                 Arbol<Amo> padre = (Arbol<Amo>) padres.get(0);
                 if (padre != null) {
-                    padre.agregarHijo(amoArbol);
+                    padre.addHijo(amoArbol);
                     continue;
                 }
             }
@@ -189,18 +189,18 @@ public class ControladorApp {
         }
     }
     public void cargarArbolGraph(A_Arbol<Amo> amo) {
-        // Obtengo los niveles del árbol, para poder calcular los xStepSize y yStepSize.
-        ListaEnlazada<A_Arbol<Amo>>[] niveles = amo.getNiveles();
-        int numNiveles = niveles.length;
+        // Obtengo los levels del árbol, para poder calcular los xStepSize y yStepSize.
+        ListaEnlazada<A_Arbol<Amo>>[] levels = amo.getLevels();
+        int numLevels = levels.length;
 
         // Calculo los xStepSize y yStepSize
-        int yStepSize = ControladorApp.GRAPH_HEIGHT / numNiveles;
+        int yStepSize = ControladorApp.GRAPH_HEIGHT / numLevels;
         int maxNumGen = 0;
-        // el mayor número de hijos de todos los niveles
+        // el mayor número de hijos de todos los levels
         // para calcular el xStepSize
-        for (int i = 0; i < niveles.length; i++) {
-            if (niveles[i].size() > maxNumGen) {
-                maxNumGen = niveles[i].size();
+        for (int i = 0; i < levels.length; i++) {
+            if (levels[i].size() > maxNumGen) {
+                maxNumGen = levels[i].size();
             }
         }
         int xStepSize = ControladorApp.GRAPH_WIDTH / maxNumGen;
@@ -218,7 +218,7 @@ public class ControladorApp {
                 " text-background-color: #FFFFE0;" + // Color de fondo del texto (un tono claro de amarillo)
                 " text-padding: 5px;" + // Relleno alrededor del texto
 
-                " fill-color: #F0E68C;" + // Color de relleno del nodo (un tono más oscuro de amarillo)
+                " fill-color: #d99058;" + // Color de relleno del nodo (un tono más oscuro de amarillo)
                 " stroke-mode: plain;" + // Activa el borde del nodo
                 " stroke-color: black;" + // Color del borde
                 " shape: box;" + // Forma de los nodos como caja
@@ -239,7 +239,7 @@ public class ControladorApp {
         // Limpiamos el gráfico
         this.graph.clear();
         // obtenemos todos los antepasados del lord
-        ListaEnlazada<A_Arbol<Amo>> antepasados = this.arbolCasa.getAscendentes(amo);
+        ListaEnlazada<A_Arbol<Amo>> antepasados = this.arbolCasa.getAscends(amo);
         if (antepasados.vacia()) {
             return;
         }
@@ -317,7 +317,7 @@ public class ControladorApp {
         this.graph.setAttribute("ui.quality", true);
 
     }
-    public String graphToString() {
+    public String grafoToString() {
         String txt = "Grafo: " + this.graph.toString() + "\n";
         for (int i = 0; i < this.graph.getNodeCount(); i++) {
             txt += "nodo: " + this.graph.getNode(i).toString() + "\n";

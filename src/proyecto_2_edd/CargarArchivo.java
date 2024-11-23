@@ -8,7 +8,14 @@ package proyecto_2_edd;
  *
  * @author pablo
  */
+
+import javax.swing.JOptionPane;
+import java.io.File;
+
 public class CargarArchivo extends javax.swing.JFrame {
+    
+    private MainApp mainClass;
+    private MainInterface mainInterface;
 
     /**
      * Creates new form CargarArchivo
@@ -16,6 +23,20 @@ public class CargarArchivo extends javax.swing.JFrame {
     public CargarArchivo() {
         initComponents();
     }
+    
+    
+    
+    
+    public CargarArchivo(MainApp mainClass, MainInterface mainInterface) {
+        setLocationRelativeTo(mainInterface);
+        this.mainInterface = mainInterface;
+        this.mainClass = mainClass;
+        initComponents();
+        // Seleccionar el directorio por defecto
+        File directory = new File(App.Direct_Default);
+        aFileSelector.setCurrentDirectory(directory);        
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,26 +47,62 @@ public class CargarArchivo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jFileChooser1 = new javax.swing.JFileChooser();
+        aFileSelector = new javax.swing.JFileChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        aFileSelector.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aFileSelectorActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(aFileSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jFileChooser1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
+            .addComponent(aFileSelector, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void aFileSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aFileSelectorActionPerformed
+
+        File selectedFile = aFileSelector.getSelectedFile();
+        if (selectedFile == null || evt.getActionCommand() == "Cancel") {
+            this.mainInterface.setVisible(true);
+            dispose();
+            return;
+        }        
+        
+        String fileName = selectedFile.getAbsolutePath();
+        if (selectedFile.getName().endsWith(".json")) {
+            this.mainClass.ControladorApp.reiniciar();
+            if (!this.mainClass.ControladorApp.loadHouse(fileName)) {
+                JOptionPane.showMessageDialog(this,
+                        "No se pudo cargar el archivo json: " + fileName);
+                selectedFile = null;
+                aFileSelector.setSelectedFile(selectedFile);
+                return;
+            }
+            this.mainClass.ControladorApp.;
+            this.mainClass.ControladorApp.cargarArbolGraph((A_Arbol<Amo>) this.mainClass.ControladorApp.casaArbol);
+            this.mainInterface.setJLabelTitle(this.mainClass.ControladorApp.casa.fullname);
+            this.mainInterface.setVisible(true);
+            dispose();
+            return;
+    }//GEN-LAST:event_aFileSelectorActionPerformed
+
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -82,6 +139,6 @@ public class CargarArchivo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JFileChooser aFileSelector;
     // End of variables declaration//GEN-END:variables
 }

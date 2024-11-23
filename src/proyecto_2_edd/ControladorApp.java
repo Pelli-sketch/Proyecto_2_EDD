@@ -338,5 +338,8 @@ public class ControladorApp {
             this.arbolCasa.vaciar();
         }
         this.graph.clear();
+    }
+    public static void main(String[] args) {
+
     }    
 }

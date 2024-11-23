@@ -47,7 +47,7 @@ public class ControladorApp {
         for (int i = 0; i < this.casa.amos.size(); i++) {
 
             // el amo que vamos a ingresar al árbol y a las hashTables
-            Amo amo = this.casa.amos.get(i);
+            Amo amo = this.casa.amos.obtener(i);
             if (i != 0) {
                 if (amo.father == null) {
                     throw new RuntimeException("Error en la carga del árbol, el padre de " + amo.name
@@ -75,45 +75,45 @@ public class ControladorApp {
 
             // Buscamos por el alias a ver si es el que necesitamos
             this.arbolCasa.setComparador(Amo.comparadorAlias);
-            ListaEnlazada<A_Arbol<Amo>> padres = this.arbolCasa.search(amoPadre);
+            ListaEnlazada<A_Arbol<Amo>> padres = this.arbolCasa.buscar(amoPadre);
             if (padres.size() > 1) {
                 throw new RuntimeException("Error en la carga del árbol, hay mas de un padre de " + amo.name);
             }
             if (padres.size() == 1) {
                 // Si lo encontramos lo agregamos como hizo del padre encontrado.
-                Arbol<Amo> padre = (Arbol<Amo>) padres.get(0);
+                Arbol<Amo> padre = (Arbol<Amo>) padres.obtener(0);
                 if (padre != null) {
-                    padre.addHijo(amoArbol);
+                    padre.agregarHijo(amoArbol);
                     continue;
                 }
             }
 
             // Buscamos por el nombre único a ver si es el que necesitamos
             this.arbolCasa.setComparador(Amo.comparadorNombreUnico);
-            padres = this.arbolCasa.search(amoPadre);
+            padres = this.arbolCasa.buscar(amoPadre);
             if (padres.size() > 1) {
                 throw new RuntimeException("Error en la carga del árbol, hay mas de un padre de " + amo.name);
             }
             if (padres.size() == 1) {
                 // Si lo encontramos lo agregamos como hizo del padre encontrado.
-                Arbol<Amo> padre = (Arbol<Amo>) padres.get(0);
+                Arbol<Amo> padre = (Arbol<Amo>) padres.obtener(0);
                 if (padre != null) {
-                    padre.addHijo(amoArbol);
+                    padre.agregarHijo(amoArbol);
                     continue;
                 }
             }
 
             // Buscamos por el nombre completo
             this.arbolCasa.setComparador(Amo.comparadorNombreFull);
-            padres = this.arbolCasa.search(amoPadre);
+            padres = this.arbolCasa.buscar(amoPadre);
             if (padres.size() > 1) {
                 throw new RuntimeException("Error en la carga del árbol, hay mas de un padre de " + amo.name);
             }
             if (padres.size() == 1) {
                 // Si se encontró lo agregamos como hizo del padre encontrado.
-                Arbol<Amo> padre = (Arbol<Amo>) padres.get(0);
+                Arbol<Amo> padre = (Arbol<Amo>) padres.obtener(0);
                 if (padre != null) {
-                    padre.addHijo(amoArbol);
+                    padre.agregarHijo(amoArbol);
                     continue;
                 }
             }
@@ -136,15 +136,15 @@ public class ControladorApp {
         // posible hacer la búsqueda en el hash ya sea por nombre único o por alias
         // usamos el formato: uniqueName:alias. Así cuando tenga un nodo hago un
         // split por el ":" y luego lo busco en el hashTable correspondiente.
-        String uniqueName = amo.getValor().uniqueName;
+        String uniqueName = amo.obtenerValor().uniqueName;
         if (uniqueName == null) {
             uniqueName = "";
         }
-        String alias = amo.getValor().alias;
+        String alias = amo.obtenerValor().alias;
         if (alias == null) {
             alias = "";
         }
-        String name = amo.getValor().name;
+        String name = amo.obtenerValor().name;
         if (name == null) {
             name = "";
         }
@@ -167,7 +167,7 @@ public class ControladorApp {
         }
 
         // Obtengo los hijos del subarbol que estoy recorriendo.
-        ListaEnlazada<A_Arbol<Amo>> hijos = amo.getHijos();
+        ListaEnlazada<A_Arbol<Amo>> hijos = amo.obtenerHijos();
 
         // Si no tiene hijos, se termina la recursividad.
         if (hijos.vacia()) {
@@ -184,13 +184,13 @@ public class ControladorApp {
             // para que este por debajo de su padre, y el x calculado sumándole al x el
             // xStepSize, así cada hijo se va a ir moviendo hacia la derecha y todos
             // centrados con respecto a su padre.
-            this.cargarArbolGraph(hijos.get(i), nodeId, x, y - yStepSize, xStepSize, yStepSize);
+            this.cargarArbolGraph(hijos.obtener(i), nodeId, x, y - yStepSize, xStepSize, yStepSize);
             x += xStepSize;
         }
     }
     public void cargarArbolGraph(A_Arbol<Amo> amo) {
         // Obtengo los levels del árbol, para poder calcular los xStepSize y yStepSize.
-        ListaEnlazada<A_Arbol<Amo>>[] levels = amo.getLevels();
+        ListaEnlazada<A_Arbol<Amo>>[] levels = amo.obtenerLevels();
         int numLevels = levels.length;
 
         // Calculo los xStepSize y yStepSize
@@ -239,7 +239,7 @@ public class ControladorApp {
         // Limpiamos el gráfico
         this.graph.clear();
         // obtenemos todos los antepasados del Amo
-        ListaEnlazada<A_Arbol<Amo>> antepasados = this.arbolCasa.getAscends(amo);
+        ListaEnlazada<A_Arbol<Amo>> antepasados = this.arbolCasa.obtenerAscends(amo);
         if (antepasados.vacia()) {
             return;
         }
@@ -258,15 +258,15 @@ public class ControladorApp {
         for (int i = 0, y = 0; i < antepasados.size(); i++, y -= yStepSize) {
 
             // calculo los nodeIds
-            String uniqueName = antepasados.get(i).getValor().uniqueName;
+            String uniqueName = antepasados.obtener(i).obtenerValor().uniqueName;
             if (uniqueName == null) {
                 uniqueName = "";
             }
-            String alias = antepasados.get(i).getValor().alias;
+            String alias = antepasados.obtener(i).obtenerValor().alias;
             if (alias == null) {
                 alias = "";
             }
-            String name = antepasados.get(i).getValor().name;
+            String name = antepasados.obtener(i).obtenerValor().name;
             if (name == null) {
                 name = "";
             }
@@ -333,7 +333,7 @@ public class ControladorApp {
      */
 
     public void reset() {
-        this.casa.vaciar();
+        this.casa.vaciarLista();
         if (this.arbolCasa != null) {
             this.arbolCasa.vaciar();
         }

@@ -16,35 +16,35 @@ interface A_Arbol<T> {
 
     public int height();
 
-    public T getValor();
+    public T obtenerValor();
 
-    public void setValor(T valor);
+    public void actualizarValor(T valor);
 
-    public A_Arbol<T> getRaiz();
+    public A_Arbol<T> obtenerRaiz();
 
-    public boolean addHijo(A_Arbol<T> hijo);
+    public boolean agregarHijo(A_Arbol<T> hijo);
 
-    public ListaEnlazada<A_Arbol<T>> getHijos();
+    public ListaEnlazada<A_Arbol<T>> obtenerHijos();
 
-    public A_Arbol<T> getHijo(int i);
+    public A_Arbol<T> obtenerHijo(int i);
 
     public void setComparador(AComparador<T> comparador);
 
-    public ListaEnlazada<A_Arbol<T>> searchHijo(T valor);
+    public ListaEnlazada<A_Arbol<T>> buscarHijo(T valor);
 
-    public ListaEnlazada<A_Arbol<T>> search(T valor);
+    public ListaEnlazada<A_Arbol<T>> buscar(T valor);
 
-    public A_Arbol<T> getPadre(A_Arbol<T> arbol);
+    public A_Arbol<T> obtenerPadre(A_Arbol<T> arbol);
 
-    public ListaEnlazada<A_Arbol<T>> getAscends(A_Arbol<T> arbol);
+    public ListaEnlazada<A_Arbol<T>> obtenerAscends(A_Arbol<T> arbol);
 
-    public ListaEnlazada<A_Arbol<T>> getDescends(A_Arbol<T> arbol);
+    public ListaEnlazada<A_Arbol<T>> obtenerDescends(A_Arbol<T> arbol);
 
-    public ListaEnlazada<A_Arbol<T>>[] getLevels();
+    public ListaEnlazada<A_Arbol<T>>[] obtenerLevels();
 
-    public ListaEnlazada<A_Arbol<T>> getLevel(int level);
+    public ListaEnlazada<A_Arbol<T>> obtenerLevel(int level);
 
-    public int getNumLevel(A_Arbol<T> arbol);
+    public int obtenerNumLevel(A_Arbol<T> arbol);
 
     public void vaciar();
 

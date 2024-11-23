@@ -15,7 +15,7 @@ public class Casa {
     public String fullname = null;
     public String name = null;
     
-    public ArrayList<Amo> amos;
+    public ListaDinamica<Amo> amos;
     
     public boolean parse(String json) {
         if (json == null) {
@@ -97,21 +97,21 @@ public class Casa {
         }
         // Como la lista ya esta definida, compactamos para no tener espacios
         // vacíos en el array list.
-        this.amos.compactar();
+        this.amos.compactarArreglo();
         return true;
     }    
     
     public Casa() {
-        this.amos = new ArrayList<>(15, 10);
+        this.amos = new ListaDinamica<>(15, 10);
     }
     
     public Casa(String json) {
-        this.amos = new ArrayList<>(15, 10);
+        this.amos = new ListaDinamica<>(15, 10);
         this.parse(json);
     }
     
-    public void vaciar() {
-        this.amos.vaciar();
+    public void vaciarLista() {
+        this.amos.vaciarLista();
         this.fullname = null;
         this.name = null;
     }
@@ -124,7 +124,7 @@ public class Casa {
     public String toString() {
         String txt = this.HOUSE_TITLE + ": " + this.name + "\n";
         for (int i = 0; i < this.amos.size(); i++) {
-            String[] lines = this.amos.get(i).DataImplementsToString().split("\n");
+            String[] lines = this.amos.obtener(i).DataImplementsToString().split("\n");
             for (int j = 0; j < lines.length; j++) {
                 txt += "\t" + lines[j] + "\n";
             }

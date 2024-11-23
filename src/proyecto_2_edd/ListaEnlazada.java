@@ -53,7 +53,7 @@ public class ListaEnlazada<T> implements Alist<T> {
 
     public ListaEnlazada(Alist<T> valores) {
         for (int i = 0; i < valores.size(); i++) {
-            this.agregar(valores.get(i));
+            this.agregar(valores.obtener(i));
         }
         this.cachedIndex = null;
         this.cachedNodo = null;
@@ -69,13 +69,13 @@ public class ListaEnlazada<T> implements Alist<T> {
         return tam;
     }
 
-    protected int transformarIndex(int index) {
-        return (index < 0 && index >= -tam) ? tam + index : index;
+    protected int convertirIndice(int indice) {
+        return (indice < 0 && indice >= -tam) ? tam + indice : indice;
     }
 
-    public boolean insertar(int index, T valor) {
-        index = transformarIndex(index);
-        if (index < 0 || index > tam) {
+    public boolean insertar(int indice, T valor) {
+        indice = convertirIndice(indice);
+        if (indice < 0 || indice > tam) {
             return false;
         }
 
@@ -89,7 +89,7 @@ public class ListaEnlazada<T> implements Alist<T> {
             return true;
         }
 
-        if (index == 0) {
+        if (indice == 0) {
             nuevoNodo.siguiente = cabeza;
             cabeza = nuevoNodo;
             cachedIndex = 0;
@@ -98,7 +98,7 @@ public class ListaEnlazada<T> implements Alist<T> {
             return true;
         }
 
-        if (index == tam) {
+        if (indice == tam) {
             cola.siguiente = nuevoNodo;
             cola = nuevoNodo;
             tam++;
@@ -107,7 +107,7 @@ public class ListaEnlazada<T> implements Alist<T> {
 
         Nodo<T> aux;
         int i;
-        if (cachedIndex == null || index < cachedIndex - 1) {
+        if (cachedIndex == null || indice < cachedIndex - 1) {
             aux = cabeza;
             i = 0;
         } else {
@@ -115,13 +115,13 @@ public class ListaEnlazada<T> implements Alist<T> {
             i = cachedIndex;
         }
 
-        for (; i < index - 1; i++) {
+        for (; i < indice - 1; i++) {
             aux = aux.siguiente;
         }
 
         nuevoNodo.siguiente = aux.siguiente;
         aux.siguiente = nuevoNodo;
-        cachedIndex = index;
+        cachedIndex = indice;
         cachedNodo = nuevoNodo;
         tam++;
         return true;
@@ -132,97 +132,97 @@ public class ListaEnlazada<T> implements Alist<T> {
         return insertar(size(), valor);
     }
 
-    public void agregar(T[] valores) {
+    public void agregarDesdeArreglo(T[] valores) {
         for (T valor : valores) {
             agregar(valor);
         }
     }
 
-    public void agregar(Alist<T> lista) {
+    public void agregarDesdeLista(Alist<T> lista) {
         for (int i = 0; i < lista.size(); i++) {
-            agregar(lista.get(i));
+            agregar(lista.obtener(i));
         }
     }
 
-    public T get(int index) {
+    public T obtener(int indice) {
         if (vacia()) {
-            resetCache();
+            reactualizarCache();
             return null;
         }
-        index = transformarIndex(index);
-        if (index < 0 || index >= tam) {
+        indice = convertirIndice(indice);
+        if (indice < 0 || indice >= tam) {
             return null;
         }
-        if (index == tam - 1) {
+        if (indice == tam - 1) {
             return cola.valor;
         }
     
-        Nodo<T> nodo = (cachedIndex == null || index < cachedIndex) ? cabeza : cachedNodo;
-        int i = (cachedIndex == null || index < cachedIndex) ? 0 : cachedIndex;
+        Nodo<T> nodo = (cachedIndex == null || indice < cachedIndex) ? cabeza : cachedNodo;
+        int i = (cachedIndex == null || indice < cachedIndex) ? 0 : cachedIndex;
 
-        while (i < index) {
+        while (i < indice) {
             nodo = nodo.siguiente;
             i++;
         }
     
-        updateCache(index, nodo);
+        updateCache(indice, nodo);
         return nodo.valor;
     }
 
     @Override
-    public boolean set(int index, T valor) {
+    public boolean actualizar(int indice, T valor) {
         if (vacia()) {
-            resetCache();
+            reactualizarCache();
             return false;
         }
-        index = transformarIndex(index);
-        if (index < 0 || index >= tam) {
+        indice = convertirIndice(indice);
+        if (indice < 0 || indice >= tam) {
             return false;
         }
-        if (index == tam - 1) {
+        if (indice == tam - 1) {
             cola.valor = valor;
             return true;
         }
 
-        Nodo<T> nodo = (cachedIndex == null || index < cachedIndex) ? cabeza : cachedNodo;
-        int i = (cachedIndex == null || index < cachedIndex) ? 0 : cachedIndex;
+        Nodo<T> nodo = (cachedIndex == null || indice < cachedIndex) ? cabeza : cachedNodo;
+        int i = (cachedIndex == null || indice < cachedIndex) ? 0 : cachedIndex;
 
-        while (i < index) {
+        while (i < indice) {
             nodo = nodo.siguiente;
             i++;
         }
     
         nodo.valor = valor;
-        updateCache(index, nodo);
+        updateCache(indice, nodo);
         return true;
     }   
 
-    public T remover(int index) {
+    public T eliminar(int indice) {
         if (vacia()) {
-            resetCache();
+            reactualizarCache();
             return null;
         }
-        index = transformarIndex(index);
-        if (index < 0 || index >= tam) {
+        indice = convertirIndice(indice);
+        if (indice < 0 || indice >= tam) {
             return null;
         }
 
         Nodo<T> aux;
-        if (index == 0) {
+        if (indice == 0) {
             aux = cabeza;
             cabeza = cabeza.siguiente;
             if (cabeza == null) {
                 cola = null;
             }
             tam--;
-            resetCache();
+            reactualizarCache();
             return aux.valor;
         }
 
-        aux = (cachedIndex == null || index < cachedIndex - 1) ? cabeza : cachedNodo;
-        int i = (cachedIndex == null || index < cachedIndex - 1) ? 0 : cachedIndex;
+        aux = (cachedIndex == null || indice < cachedIndex - 1) ? cabeza : cachedNodo;
+        int i = (cachedIndex == null || indice < cachedIndex - 1) ? 0 : cachedIndex;
 
-        while (i < index - 1) {
+        while (i < indice - 1) {
             aux = aux.siguiente;
             i++;
         }
@@ -232,24 +232,24 @@ public class ListaEnlazada<T> implements Alist<T> {
             cola = aux;
         }
         aux.siguiente = nodo.siguiente;
-        resetCache();
+        reactualizarCache();
         tam--;
         nodo.siguiente = null;
         return nodo.valor;
     }
 
-    private void resetCache() {
+    private void reactualizarCache() {
         cachedIndex = null;
         cachedNodo = null;
     }
 
-    private void updateCache(int index, Nodo<T> nodo) {
-        cachedIndex = index;
+    private void updateCache(int indice, Nodo<T> nodo) {
+        cachedIndex = indice;
         cachedNodo = nodo;
     }
     
     @Override
-    public void vaciar() {
+    public void vaciarLista() {
         if (vacia()) {
             cachedIndex = null;
             cachedNodo = null;
@@ -268,7 +268,7 @@ public class ListaEnlazada<T> implements Alist<T> {
     }
 
     @Override
-    public ListaEnlazada<T> copiar() {
+    public ListaEnlazada<T> copiarLista() {
         ListaEnlazada<T> copia = new ListaEnlazada<>();
         if (!vacia()) {
             Nodo<T> nodo = cabeza;
@@ -281,7 +281,7 @@ public class ListaEnlazada<T> implements Alist<T> {
     }
 
     @Override
-    public boolean equals(Alist<T> list, AComparador<T> comparador) {
+    public boolean sonIguales(Alist<T> list, AComparador<T> comparador) {
         if (list == null || tam != list.size()) {
             return false;
         }
@@ -289,27 +289,27 @@ public class ListaEnlazada<T> implements Alist<T> {
             return true;
         }
         for (int i = 0; i < tam; i++) {
-            if (comparador.compareTo(get(i), list.get(i)) != 0) {
+            if (comparador.compareTo(obtener(i), list.obtener(i)) != 0) {
                 return false;
             }
         }
         return true;
     }
 
-    public boolean equals(Alist<T> list) {
+    public boolean sonIguales(Alist<T> list) {
         if (list == null || tam != list.size()) {
             return false;
         }
-        if (get(0) instanceof String && list.get(0) instanceof String) {
-            return equals(list, (a, b) -> ((String) a).compareTo((String) b));
+        if (obtener(0) instanceof String && list.obtener(0) instanceof String) {
+            return sonIguales(list, (a, b) -> ((String) a).compareTo((String) b));
         }
-        if (get(0) instanceof Number && list.get(0) instanceof Number) {
-            return equals(list, (a, b) -> Double.compare(((Number) a).doubleValue(), ((Number) b).doubleValue()));
+        if (obtener(0) instanceof Number && list.obtener(0) instanceof Number) {
+            return sonIguales(list, (a, b) -> Double.compare(((Number) a).doubleValue(), ((Number) b).doubleValue()));
         }
         return false;
     }
 
-    public void ordenar(AComparador<T> comparador) {
+    public void ordenarLista(AComparador<T> comparador) {
         if (tam <= 1) {
             cachedIndex = null;
             cachedNodo = null;
@@ -317,10 +317,10 @@ public class ListaEnlazada<T> implements Alist<T> {
         }
         for (int i = 0; i < size(); i++) {
             for (int j = i + 1; j < size(); j++) {
-                if (comparador.compareTo(get(i), get(j)) > 0) {
-                    T aux = get(i);
-                    set(i, get(j));
-                    set(j, aux);
+                if (comparador.compareTo(obtener(i), obtener(j)) > 0) {
+                    T aux = obtener(i);
+                    actualizar(i, obtener(j));
+                    actualizar(j, aux);
                 }
             }
         }
@@ -334,10 +334,10 @@ public class ListaEnlazada<T> implements Alist<T> {
             cachedNodo = null;
             return;
         }
-        if (get(0) instanceof String) {
-            ordenar((a, b) -> ((String) a).compareTo((String) b));
-        } else if (get(0) instanceof Number) {
-            ordenar((a, b) -> Double.compare(((Number) a).doubleValue(), ((Number) b).doubleValue()));
+        if (obtener(0) instanceof String) {
+            ordenarLista((a, b) -> ((String) a).compareTo((String) b));
+        } else if (obtener(0) instanceof Number) {
+            ordenarLista((a, b) -> Double.compare(((Number) a).doubleValue(), ((Number) b).doubleValue()));
         }
     }
 
@@ -348,32 +348,32 @@ public class ListaEnlazada<T> implements Alist<T> {
             return;
         }
         for (int i = 0; i < size() / 2; i++) {
-            T aux = get(i);
-            set(i, get(size() - i - 1));
-            set(size() - i - 1, aux);
+            T aux = obtener(i);
+            actualizar(i, obtener(size() - i - 1));
+            actualizar(size() - i - 1, aux);
         }
         cachedIndex = null;
         cachedNodo = null;
     }
 
-    public int buscar(T valor, AComparador<T> comparador) {
+    public int buscarElemento(T valor, AComparador<T> comparador) {
         for (int i = 0; i < tam; i++) {
-            if (comparador.compareTo(get(i), valor) == 0) {
+            if (comparador.compareTo(obtener(i), valor) == 0) {
                 return i;
             }
         }
         return -1;
     }
 
-    public int buscar(T valor) {
+    public int buscarElemento(T valor) {
         if (tam == 0) {
             return -1;
         }
-        if (get(0) instanceof String && valor instanceof String) {
-            return buscar(valor, (a, b) -> ((String) a).compareTo((String) b));
+        if (obtener(0) instanceof String && valor instanceof String) {
+            return buscarElemento(valor, (a, b) -> ((String) a).compareTo((String) b));
         }
-        if (get(0) instanceof Number && valor instanceof Number) {
-            return buscar(valor, (a, b) -> Double.compare(((Number) a).doubleValue(), ((Number) b).doubleValue()));
+        if (obtener(0) instanceof Number && valor instanceof Number) {
+            return buscarElemento(valor, (a, b) -> Double.compare(((Number) a).doubleValue(), ((Number) b).doubleValue()));
         }
         return -1;
     }

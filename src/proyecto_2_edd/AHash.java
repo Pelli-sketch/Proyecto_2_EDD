@@ -12,7 +12,7 @@ public interface AHash<T> {
     
     void setTam(int tam);
     
-    int getTam();
+    int obtenerTam();
 
     boolean insertar(String clave, T valor);
 

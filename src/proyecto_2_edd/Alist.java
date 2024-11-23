@@ -30,16 +30,16 @@ interface Alist<T> {
     /**
      * Método que inserta un elemento en la lista
      * 
-     * @param index el indice en la lista donde insertar el elemento
-     * @param valor el valor a insertar
+     * @param indice el indice en la lista donde insertar el elemento
+     * @param nuevoValor el nuevoValor a insertar
      * @return true si se pudo insertar, false en caso contrario
      */
-    boolean insertar(int index, T valor);
+    boolean insertar(int indice, T valor);
 
     /**
      * Método que agrega un elemento a la lista
      * 
-     * @param valor el valor a agregar
+     * @param nuevoValor el nuevoValor a agregar
      * @return true si se pudo agregar, false en caso contrario
      */
     boolean agregar(T valor);
@@ -48,65 +48,65 @@ interface Alist<T> {
      * Método que agrega un array de elementos a la lista y
      * devuelve un arreglo de booleanos con el resultado de la operación
      * 
-     * @param valor el array a agregar
+     * @param nuevoValor el array a agregar
      * @return un array de booleanos
      */
-    void agregar(T[] valor);
+    void agregarDesdeArreglo(T[] nuevoValor);
 
     /**
      * Método que agrega una lista de elementos a la lista y devuelve un array de
      * booleanos con el resultado de la operación
      * 
-     * @param valor la lista a agregar
+     * @param nuevoValor la lista a agregar
      * @return un array de booleanos
      */
-    void agregar(Alist<T> valor);
+    void agregarDesdeLista(Alist<T> nuevoValor);
 
     /**
      * Método que retorna un elemento de la lista
      * 
-     * @param index el indice del elemento
-     * @return el valor
+     * @param indice el indice del elemento
+     * @return el nuevoValor
      */
-    T get(int index);
+    T obtener(int indice);
 
     /**
      * Método que modifica un elemento de la lista
      * 
-     * @param index el indice del elemento
-     * @param valor el nuevo valor
+     * @param indice el indice del elemento
+     * @param nuevoValor el nuevo nuevoValor
      * @return true si se pudo modificar, false en caso contrario
      */
-    boolean set(int index, T valor);
+    boolean actualizar(int indice, T nuevoValor);
 
     /**
      * Método que elimina un elemento de la lista y lo retorna
      * 
-     * @param index el indice del elemento
-     * @return el valor que se elimino
+     * @param indice el indice del elemento
+     * @return el nuevoValor que se elimino
      */
-    T remover(int index);
+    T eliminar(int indice);
 
     /**
      * Método que vacía la lista
      */
-    void vaciar();
+    void vaciarLista();
     
-    Alist<T> copiar();
+    Alist<T> copiarLista();
     
-    public boolean equals(Alist<T> list, AComparador<T> comparador);
+    public boolean sonIguales(Alist<T> lista, AComparador<T> comparador);
 
-    public boolean equals(Alist<T> list);
+    public boolean sonIguales(Alist<T> lista);
     
-    public void ordenar(AComparador<T> comparador);
+    public void ordenarLista(AComparador<T> comparador);
 
     public void ordenar();
 
     public void invertir();
 
-    public int buscar(T valor, AComparador<T> comparador);
+    public int buscarElemento(T valor, AComparador<T> comparador);
 
-    public int buscar(T valor);    
+    public int buscarElemento(T valor);    
     
     /**
      * Método que retorna un string con la representación de la lista

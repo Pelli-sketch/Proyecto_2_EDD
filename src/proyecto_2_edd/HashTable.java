@@ -53,12 +53,12 @@ package proyecto_2_edd;
 //    private Par findClave(T clave) {
 //        int indice = hash(clave);
 //        Lista<Par<T, Y>> bucket = this.buckets[indice];
-//        NodoLista<Par<T, Y>> aux = bucket.getpFirst();
+//        NodoLista<Par<T, Y>> aux = bucket.obtenerpFirst();
 //        while (aux != null) {
-//            if (aux.getData().primero.equals(clave)) {
-//            return aux.getData();
+//            if (aux.obtenerData().primero.equals(clave)) {
+//            return aux.obtenerData();
 //            } 
-//            aux = aux.getpNext();
+//            aux = aux.obtenerpNext();
 //            
 //        }
 //        return null;
@@ -290,7 +290,7 @@ public class HashTable<T> implements AHash<T> {
      */
 
     @Override
-    public int getTam() {
+    public int obtenerTam() {
         return this.tam;
     }
 
@@ -300,7 +300,7 @@ public class HashTable<T> implements AHash<T> {
      * @return el número de items de la tabla hash
      */
 
-    public int getNumItems() {
+    public int obtenerNumItems() {
         return this.numItems;
     }
 
@@ -421,8 +421,8 @@ public class HashTable<T> implements AHash<T> {
         }
         int index = calculatedHash % this.tam;
         for (int i = 0; i < this.hashTable[index].size(); i++) {
-            if (this.hashTable[index].get(i).clave.equals(clave)) {
-                return this.hashTable[index].get(i).valor;
+            if (this.hashTable[index].obtener(i).clave.equals(clave)) {
+                return this.hashTable[index].obtener(i).valor;
             }
         }
         return null;
@@ -451,8 +451,8 @@ public class HashTable<T> implements AHash<T> {
         int index = calculatedHash % this.tam;
         ListaEnlazada<T> lista = new ListaEnlazada<>();
         for (int i = 0; i < this.hashTable[index].size(); i++) {
-            if (this.hashTable[index].get(i).clave.equals(clave)) {
-                lista.agregar(this.hashTable[index].get(i).valor);
+            if (this.hashTable[index].obtener(i).clave.equals(clave)) {
+                lista.agregar(this.hashTable[index].obtener(i).valor);
             }
         }
         return lista;

@@ -20,8 +20,8 @@ public class ControladorApp {
     Arbol<Amo> arbolCasa;
     LectorJson lectorJson = new LectorJson();
     Casa casa;
-    HashTable<Arbol<Amo>> hashTableUniqueName;
-    HashTable<Arbol<Amo>> hashTableAlias;
+    HashTable<Arbol<Amo>> hTNombreUnico;
+    HashTable<Arbol<Amo>> hTAlias;
     
     Graph graph;
     
@@ -37,11 +37,11 @@ public class ControladorApp {
         return this.casa;
     }
     
-    public HashTable<Arbol<Amo>> getHashTableUniqueName() {
-        return this.hashTableUniqueName;
+    public HashTable<Arbol<Amo>> gethTNombreUnico() {
+        return this.hTNombreUnico;
     }
-    public HashTable<Arbol<Amo>> getHashTableAlias() {
-        return this.hashTableAlias;
+    public HashTable<Arbol<Amo>> getHTAlias() {
+        return this.hTAlias;
     }
     public void Cargar_Arbol_and_Hash() {
         for (int i = 0; i < this.casa.amos.size(); i++) {
@@ -59,8 +59,8 @@ public class ControladorApp {
             Arbol<Amo> amoArbol = new Arbol<>(amo);
 
             // insertamos el sub-árbol del amo en las hashTables
-            if (amo.uniqueName != null) {
-                this.hashTableUniqueName.insertar(amo.uniqueName, amoArbol);
+            if (amo.nombreUnico != null) {
+                this.hTNombreUnico.insertar(amo.nombreUnico, amoArbol);
             }    
             if (i == 0) {
                 this.arbolCasa = amoArbol;
@@ -69,12 +69,12 @@ public class ControladorApp {
 
             // Creamos un amo padre para poder hacer las búsquedas.
             Amo amoPadre = new Amo();
-            amoPadre.uniqueName = amo.father;
+            amoPadre.nombreUnico = amo.father;
             amoPadre.fullName = amo.father;
             amoPadre.alias = amo.father;
 
             // Buscamos por el alias a ver si es el que necesitamos
-            this.arbolCasa.setComparador(Amo.comparadorAlias);
+            this.arbolCasa.actualizarComparador(Amo.comparadorAlias);
             ListaEnlazada<A_Arbol<Amo>> padres = this.arbolCasa.buscar(amoPadre);
             if (padres.size() > 1) {
                 throw new RuntimeException("Error en la carga del árbol, hay mas de un padre de " + amo.name);
@@ -89,7 +89,7 @@ public class ControladorApp {
             }
 
             // Buscamos por el nombre único a ver si es el que necesitamos
-            this.arbolCasa.setComparador(Amo.comparadorNombreUnico);
+            this.arbolCasa.actualizarComparador(Amo.comparadorNombreUnico);
             padres = this.arbolCasa.buscar(amoPadre);
             if (padres.size() > 1) {
                 throw new RuntimeException("Error en la carga del árbol, hay mas de un padre de " + amo.name);
@@ -104,7 +104,7 @@ public class ControladorApp {
             }
 
             // Buscamos por el nombre completo
-            this.arbolCasa.setComparador(Amo.comparadorNombreFull);
+            this.arbolCasa.actualizarComparador(Amo.comparadorNombreFull);
             padres = this.arbolCasa.buscar(amoPadre);
             if (padres.size() > 1) {
                 throw new RuntimeException("Error en la carga del árbol, hay mas de un padre de " + amo.name);
@@ -134,11 +134,11 @@ public class ControladorApp {
 
         // vamos a crear un id para el nodo en graph stream, con el cual luego sea
         // posible hacer la búsqueda en el hash ya sea por nombre único o por alias
-        // usamos el formato: uniqueName:alias. Así cuando tenga un nodo hago un
+        // usamos el formato: nombreUnico:alias. Así cuando tenga un nodo hago un
         // split por el ":" y luego lo busco en el hashTable correspondiente.
-        String uniqueName = amo.obtenerValor().uniqueName;
-        if (uniqueName == null) {
-            uniqueName = "";
+        String nombreUnico = amo.obtenerValor().nombreUnico;
+        if (nombreUnico == null) {
+            nombreUnico = "";
         }
         String alias = amo.obtenerValor().alias;
         if (alias == null) {
@@ -148,7 +148,7 @@ public class ControladorApp {
         if (name == null) {
             name = "";
         }
-        String nodeId = uniqueName + ":" + alias;
+        String nodeId = nombreUnico + ":" + alias;
 
         // asigno el nodeId para crear el nodo y le asigno como etiqueta el nombre,
         // ya que es más corto y permite ver mejor a los nodos del árbol en su
@@ -245,10 +245,10 @@ public class ControladorApp {
         }
 
         // necesitamos un arreglo de ids de nodos para los antepasados
-        // al igual que con el cargarArbolGraph, los ids serán uniqueName:alias
+        // al igual que con el cargarArbolGraph, los ids serán nombreUnico:alias
         // ya que me permite poder hacer luego busquedas en el hashTable
-        // ya sea por uniqueName o por alias haciendo solamente un split
-        // de uniqueName:alias por el ":".
+        // ya sea por nombreUnico o por alias haciendo solamente un split
+        // de nombreUnico:alias por el ":".
 
         String[] nodeIds = new String[antepasados.size()];
         int numAntepasados = antepasados.size();
@@ -258,9 +258,9 @@ public class ControladorApp {
         for (int i = 0, y = 0; i < antepasados.size(); i++, y -= yStepSize) {
 
             // calculo los nodeIds
-            String uniqueName = antepasados.obtener(i).obtenerValor().uniqueName;
-            if (uniqueName == null) {
-                uniqueName = "";
+            String nombreUnico = antepasados.obtener(i).obtenerValor().nombreUnico;
+            if (nombreUnico == null) {
+                nombreUnico = "";
             }
             String alias = antepasados.obtener(i).obtenerValor().alias;
             if (alias == null) {
@@ -270,7 +270,7 @@ public class ControladorApp {
             if (name == null) {
                 name = "";
             }
-            String nodeId = uniqueName + ":" + alias;
+            String nodeId = nombreUnico + ":" + alias;
             nodeIds[i] = nodeId;
 
             // creo el nodo con el nodeId

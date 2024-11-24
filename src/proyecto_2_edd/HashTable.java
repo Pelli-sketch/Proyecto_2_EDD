@@ -133,7 +133,7 @@ public class HashTable<T> implements AHash<T> {
     /**
      * Porcentaje de espacio adicional.
      */
-    private Integer pctEspacioAdicional = null;
+    private Integer AditionalPct = null;
 
     /**
      * Tamaño de la tabla hash.
@@ -175,15 +175,15 @@ public class HashTable<T> implements AHash<T> {
     /**
      * Establece el porcentaje de espacio adicional.
      * 
-     * @param pctEspacioAdicional el porcentaje de espacio adicional
+     * @param AditionalPct el porcentaje de espacio adicional
      */
 
-    public void setPctEspacioAdicional(int pctEspacioAdicional) {
-        if (pctEspacioAdicional < 0 || pctEspacioAdicional > MAX_PCT_ESPACIO_ADICIONAL) {
-            this.pctEspacioAdicional = DEFAULT_PCT_ESPACIO_ADICIONAL;
+    public void setAditionalPct(int AditionalPct) {
+        if (AditionalPct < 0 || AditionalPct > MAX_PCT_ESPACIO_ADICIONAL) {
+            this.AditionalPct = DEFAULT_PCT_ESPACIO_ADICIONAL;
             return;
         }
-        this.pctEspacioAdicional = pctEspacioAdicional;
+        this.AditionalPct = AditionalPct;
     }
 
     /**
@@ -196,10 +196,10 @@ public class HashTable<T> implements AHash<T> {
         if (tam < 0) {
             throw new IllegalArgumentException("El tamaño no puede ser negativo");
         }
-        if (this.pctEspacioAdicional == null) {
-            this.pctEspacioAdicional = DEFAULT_PCT_ESPACIO_ADICIONAL;
+        if (this.AditionalPct == null) {
+            this.AditionalPct = DEFAULT_PCT_ESPACIO_ADICIONAL;
         }
-        return tam * (100 + this.pctEspacioAdicional) / 100;
+        return tam * (100 + this.AditionalPct) / 100;
     }
 
     /**
@@ -250,15 +250,15 @@ public class HashTable<T> implements AHash<T> {
      * el porcentaje de espacio adicional.
      *
      * @param tam el tamaño de la tabla
-     * @param pctEspacioAdicional el porcentaje de espacio adicional
+     * @param AditionalPct el porcentaje de espacio adicional
      */
     @SuppressWarnings("unchecked")
-    public HashTable(int tam, int pctEspacioAdicional) {
+    public HashTable(int tam, int AditionalPct) {
         numItems = 0;
         if (tam < 0) {
             throw new IllegalArgumentException("El tamaño no puede ser negativo");
         }
-        this.setPctEspacioAdicional(pctEspacioAdicional);
+        this.setAditionalPct(AditionalPct);
         int tamCalculado = calcularTam(tam);
         int primoCalculado = calcularPrimo(tamCalculado);
         if (primoCalculado == -1) {

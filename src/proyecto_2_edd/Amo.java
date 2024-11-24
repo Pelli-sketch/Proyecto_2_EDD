@@ -17,7 +17,7 @@ public class Amo {
     public String fullName = null;
     public String name = null;
     public String lastName = null;
-    public String uniqueName = null;
+    public String nombreUnico = null;
     public String house = null;
     public String numeral = null;
     public String father = null;
@@ -165,9 +165,9 @@ public class Amo {
 
             // ahora, vamos a ir viendo los campos y sus valores
             if (fieldTitle.equals(NUMERAL_TITLE)) {
-                // si tenemos un numeral, tenemos un uniqueName
+                // si tenemos un numeral, tenemos un nombreUnico
                 this.numeral = fieldValue;
-                this.uniqueName = this.fullName + ", " + this.numeral + " " + Amo.NUMERAL_TITLE.toLowerCase();
+                this.nombreUnico = this.fullName + ", " + this.numeral + " " + Amo.NUMERAL_TITLE.toLowerCase();
                 continue;
             }
             if (fieldTitle.equals(FATHER_TITLE)) {
@@ -302,14 +302,14 @@ public class Amo {
     }
 
     public String toString() {
-        return this.uniqueName;
+        return this.nombreUnico;
     }
     
     
     public static AComparador<Amo> comparadorNombre = (Amo a, Amo b) -> a.name.toLowerCase()
             .compareTo(b.name.toLowerCase());
-    public static AComparador<Amo> comparadorNombreUnico = (Amo a, Amo b) -> a.uniqueName.toLowerCase()
-            .compareTo(b.uniqueName.toLowerCase());
+    public static AComparador<Amo> comparadorNombreUnico = (Amo a, Amo b) -> a.nombreUnico.toLowerCase()
+            .compareTo(b.nombreUnico.toLowerCase());
     public static AComparador<Amo> comparadorNombreFull = (Amo a, Amo b) -> a.fullName.toLowerCase()
             .compareTo(b.fullName.toLowerCase());    
     public static AComparador<Amo> comparadorAlias = (Amo a, Amo b) -> {
@@ -329,7 +329,7 @@ public class Amo {
         return title1.compareTo(title2);
     };
     public static AComparador<Amo> comparadorNombreUnicoComienzaPor = (Amo a, Amo b) -> {
-        if (a.uniqueName.toLowerCase().startsWith(b.uniqueName.toLowerCase())) {
+        if (a.nombreUnico.toLowerCase().startsWith(b.nombreUnico.toLowerCase())) {
             return 0;
         }
         return -1;

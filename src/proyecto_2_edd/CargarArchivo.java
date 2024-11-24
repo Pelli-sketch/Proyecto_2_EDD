@@ -92,7 +92,7 @@ public class CargarArchivo extends javax.swing.JFrame {
                 aFileSelector.setSelectedFile(selectedFile);
                 return;
             }
-            this.mainClass.ControladorApp.;
+            this.mainClass.ControladorApp;
             this.mainClass.ControladorApp.cargarArbolGraph((A_Arbol<Amo>) this.mainClass.ControladorApp.casaArbol);
             this.mainInterface.setJLabelTitle(this.mainClass.ControladorApp.casa.fullname);
             this.mainInterface.setVisible(true);

@@ -19,9 +19,9 @@ public class LectorJson {
 
     public static void leerJson(String nombreArchivo) throws Exception {
         Gson gson = new Gson();
-
+        Lista listaNodosArbol = new Lista();
+        HashTable tablaFamilia = new HashTable(20);
         try (Reader reader = new FileReader(nombreArchivo)) {
-
             JsonParser parser = new JsonParser();
             JsonElement tree = parser.parse(reader);
 
@@ -49,6 +49,7 @@ public class LectorJson {
                                 String knStr = (String) kn;
                                 JsonArray propiedades = jsonFM.getAsJsonArray(knStr);
                                 int i = 0;
+                                String[] strHijos = null;
                                 String strOHN = null;
                                 String strBorn = null;
                                 String strPadre = null;
@@ -61,7 +62,7 @@ public class LectorJson {
                                 String strNotes = null;
                                 String strFate = null;
                                 JsonArray hijosJson = null;
-                                for (Object prop : propiedades) {        
+                                for (Object prop : propiedades) {
                                     String strPropName = propiedades.get(i).getAsJsonObject().keySet().iterator().next();
                                     System.out.println("\n clave de la propiedad: " + strPropName);
                                     switch (strPropName) {
@@ -111,11 +112,11 @@ public class LectorJson {
                                             break;
                                         case "Father to":
                                             hijosJson = propiedades.get(i).getAsJsonObject().get("Father to").getAsJsonArray();
-                                            String[] hijos = new String[hijosJson.size()];
+                                            strHijos = new String[hijosJson.size()];
                                             int l = 0;
                                             for (JsonElement e : hijosJson) {
-                                                hijos[l] = e.toString();
-                                                System.out.println("hijo: " + hijos[l]);
+                                                strHijos[l] = e.toString();
+                                                System.out.println("hijo: " + strHijos[l]);
                                                 l++;
 
                                             }
@@ -127,16 +128,44 @@ public class LectorJson {
 
                                     i = i + 1;
                                 }
-
-//Crear elementos 
-     
-
+                                FamilyMember fm = new FamilyMember(knStr);
+                                fm.setHouse(kStr);
+                                fm.setEyeColor(strOfEyes);
+                                fm.setBornTo(strBorn);
+                                fm.setHeldTitle(strHT);
+                                fm.setKnown_As(strKTA);
+                                fm.setWedTo(strWed);
+                                fm.setHairColor(strOfHair);
+                                fm.setNotes(strNotes);
+                                fm.setFate(strFate);
+                                fm.setFatherOf(strHijos);
+                                // System.out.println(fm.ToString());
+                                tablaFamilia.insertar(knStr, fm);
+                                int cantHijos = 0;
+                                if (strHijos != null) {
+                                    cantHijos = strHijos.length;
+                                }
+                                NodoArbol aux = new NodoArbol(knStr, cantHijos);
+                                 
                             }
                         }
                     }
                 }
-            }
-
+            } 
+                   //System.out.println(tablaFamilia.toString());
+                   //Buscar la raiz del arbol en la tabla hash 
+                   //System.out.println(tablaFamilia.getAll());        
+                   /**para crear el arbol es necesario buscar la raiz, 
+                    * el cual se diferencia porque su string padre es null o no existe,
+                    * por lo que se inicia por él, tambien tengo los nombres de los hijos en la variable fm.hijos
+                    * y tengo los nombres y la longitud del arreglo, con eso creo los nodos de cada hijo y 
+                    * los asigno como hijos y al padre como padre
+                   crear un arreglo de arboles y luego tendremos que irlos reestructurando recorriendolos y verificando 
+                   * los datos para ello, ya los nodos estan creados, de cada nodo arbol se busca la clave
+                   * y se van buscando y agregando
+                   la informacion de todos se encuentra en la tabla de hash, 
+                   * por lo que solo habría que buscarla en la info almacenada de cada miembro
+                  */
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println(e.toString());

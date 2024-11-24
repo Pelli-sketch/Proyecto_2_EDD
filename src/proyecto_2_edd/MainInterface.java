@@ -36,10 +36,10 @@ public class MainInterface extends javax.swing.JFrame implements ViewerListener,
     
     private Node selectedNode = null;
     private boolean takedNode = false;
-    private String selectedamoByName = null;
-    private boolean selectedamoByNameShowed = false;
-    private String selectedamoByTitle = null;
-    private boolean selectedamoByTitleShowed = false;
+    private String selectedAmoByName = null;
+    private boolean selectedAmoByNameShowed = false;
+    private String selectedAmoByTitle = null;
+    private boolean selectedAmoByTitleShowed = false;
     
 
     /**

@@ -33,6 +33,18 @@ public class ControladorApp {
         this.arbolCasa = null;
     }
     
+    public boolean cargarCasa(String nombreArchivo) {
+        String json = this.lectorJson.cargar(nombreArchivo);
+        if (!this.casa.parse(json)) {
+            return false;
+        }
+        int tam = this.casa.amos.size();
+        this.hTNombreUnico = new HashTable<>(tam);
+        this.hTAlias = new HashTable<>(tam);
+
+        return true;
+    }
+    
     public Casa getCasa() {
         return this.casa;
     }
@@ -320,10 +332,10 @@ public class ControladorApp {
     public String grafoToString() {
         String txt = "Grafo: " + this.graph.toString() + "\n";
         for (int i = 0; i < this.graph.getNodeCount(); i++) {
-            txt += "nodo: " + this.graph.getNode(i).toString() + "\n";
+            txt += "node: " + this.graph.getNode(i).toString() + "\n";
         }
         for (int i = 0; i < this.graph.getEdgeCount(); i++) {
-            txt += "Arista: " + this.graph.getEdge(i).getId().toString() + "\n";
+            txt += "Arist: " + this.graph.getEdge(i).getId().toString() + "\n";
         }
         return txt;
     }
@@ -332,7 +344,7 @@ public class ControladorApp {
      * Resetea el arbol y el grafo
      */
 
-    public void reset() {
+    public void reiniciar() {
         this.casa.vaciarLista();
         if (this.arbolCasa != null) {
             this.arbolCasa.vaciar();

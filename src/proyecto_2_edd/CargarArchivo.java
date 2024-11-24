@@ -33,7 +33,7 @@ public class CargarArchivo extends javax.swing.JFrame {
         this.mainClass = mainClass;
         initComponents();
         // Seleccionar el directorio por defecto
-        File directory = new File(App.Direct_Default);
+        File directory = new File(MainApp.Direct_Default);
         aFileSelector.setCurrentDirectory(directory);        
     }
     
@@ -84,20 +84,22 @@ public class CargarArchivo extends javax.swing.JFrame {
         
         String fileName = selectedFile.getAbsolutePath();
         if (selectedFile.getName().endsWith(".json")) {
-            this.mainClass.ControladorApp.reiniciar();
-            if (!this.mainClass.ControladorApp.loadHouse(fileName)) {
+            this.mainClass.controladorApp.reiniciar();
+            if (!this.mainClass.controladorApp.cargarCasa(fileName)) {
                 JOptionPane.showMessageDialog(this,
                         "No se pudo cargar el archivo json: " + fileName);
                 selectedFile = null;
                 aFileSelector.setSelectedFile(selectedFile);
                 return;
             }
-            this.mainClass.ControladorApp;
-            this.mainClass.ControladorApp.cargarArbolGraph((A_Arbol<Amo>) this.mainClass.ControladorApp.casaArbol);
-            this.mainInterface.setJLabelTitle(this.mainClass.ControladorApp.casa.fullname);
+            this.mainClass.controladorApp.Cargar_Arbol_and_Hash();
+            this.mainClass.controladorApp.cargarArbolGraph((A_Arbol<Amo>) this.mainClass.controladorApp.arbolCasa);
+            this.mainInterface.setJLabelTitle(this.mainClass.controladorApp.casa.fullname);
             this.mainInterface.setVisible(true);
             dispose();
             return;
+        }
+        
     }//GEN-LAST:event_aFileSelectorActionPerformed
 
     

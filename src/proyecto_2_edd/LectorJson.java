@@ -8,6 +8,9 @@ import com.google.gson.JsonParser;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Set;
 
 /**
@@ -19,7 +22,7 @@ public class LectorJson {
 
     public static void leerJson(String nombreArchivo) throws Exception {
         Gson gson = new Gson();
-        Lista listaNodosArbol = new Lista();
+        ListaEnlazada listaNodosArbol = new ListaEnlazada();
         HashTable tablaFamilia = new HashTable(20);
         try (Reader reader = new FileReader(nombreArchivo)) {
             JsonParser parser = new JsonParser();
@@ -170,5 +173,25 @@ public class LectorJson {
             e.printStackTrace();
             System.out.println(e.toString());
         }
+    }
+    
+    public String cargar(String nombreArchivo) {
+        if (nombreArchivo == null) {
+            return null;
+        }
+        if (nombreArchivo == "") {
+            return null;
+        }
+        if (!nombreArchivo.endsWith(".json")) {
+            return null;
+        }
+        Path archivo = Paths.get(nombreArchivo);
+        String json = null;
+        try {
+            json = new String(Files.readAllBytes(archivo));
+        } catch (Exception e) {
+            return null;
+        }
+        return json;
     }
 }

@@ -194,7 +194,15 @@ public class FamilyMember {
     //tengo que terminar los casos con toda la información necesaria para mostrar una persona con toda su informacion, de forma que se muestre toda la informacion en la interfaz
     public String ToString() {
         String strFamilyData = "familyMemberToString";
-        strFamilyData = strFamilyData + "name: " + this.name + "\n";
+        strFamilyData = strFamilyData + "Fate: " + this.fate + "\n";
+        strFamilyData = strFamilyData + "Notes: " + this.notes + "\n";
+        strFamilyData = strFamilyData + "Of : " + this.hairColor + "\n";
+        strFamilyData = strFamilyData + "Ofair eyes: " + this.eyeColor + "\n";
+        strFamilyData = strFamilyData + "Wed to: " + this.wedTo + "\n";
+        strFamilyData = strFamilyData + "Held title: " + this.heldTitle + "\n";
+        strFamilyData = strFamilyData + "Known throught as: " + this.known_As + "\n";
+        strFamilyData = strFamilyData + "Born to: " + this.bornTo + "\n";
+        strFamilyData = strFamilyData + "Of his name: " + this.name + "\n";
         strFamilyData = strFamilyData + "Father to: (";
         if (fatherOf != null) {
             for (int i = 0; i < fatherOf.length - 1; i++) {

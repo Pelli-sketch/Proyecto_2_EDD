@@ -138,9 +138,9 @@ public class ListaEnlazada<T> implements Alist<T> {
         }
     }
 
-    public void agregarDesdeLista(Alist<T> lista) {
-        for (int i = 0; i < lista.size(); i++) {
-            agregar(lista.obtener(i));
+    public void agregarDesdeLista(Alist<T> listaa) {
+        for (int i = 0; i < listaa.size(); i++) {
+            agregar(listaa.obtener(i));
         }
     }
 
@@ -281,30 +281,30 @@ public class ListaEnlazada<T> implements Alist<T> {
     }
 
     @Override
-    public boolean sonIguales(Alist<T> list, AComparador<T> comparador) {
-        if (list == null || tam != list.size()) {
+    public boolean sonIguales(Alist<T> lista, AComparador<T> comparador) {
+        if (lista == null || tam != lista.size()) {
             return false;
         }
-        if (this == list || tam == 0) {
+        if (this == lista || tam == 0) {
             return true;
         }
         for (int i = 0; i < tam; i++) {
-            if (comparador.compareTo(obtener(i), list.obtener(i)) != 0) {
+            if (comparador.compareTo(obtener(i), lista.obtener(i)) != 0) {
                 return false;
             }
         }
         return true;
     }
 
-    public boolean sonIguales(Alist<T> list) {
-        if (list == null || tam != list.size()) {
+    public boolean sonIguales(Alist<T> lista) {
+        if (lista == null || tam != lista.size()) {
             return false;
         }
-        if (obtener(0) instanceof String && list.obtener(0) instanceof String) {
-            return sonIguales(list, (a, b) -> ((String) a).compareTo((String) b));
+        if (obtener(0) instanceof String && lista.obtener(0) instanceof String) {
+            return sonIguales(lista, (a, b) -> ((String) a).compareTo((String) b));
         }
-        if (obtener(0) instanceof Number && list.obtener(0) instanceof Number) {
-            return sonIguales(list, (a, b) -> Double.compare(((Number) a).doubleValue(), ((Number) b).doubleValue()));
+        if (obtener(0) instanceof Number && lista.obtener(0) instanceof Number) {
+            return sonIguales(lista, (a, b) -> Double.compare(((Number) a).doubleValue(), ((Number) b).doubleValue()));
         }
         return false;
     }

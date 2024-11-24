@@ -1,19 +1,19 @@
 package proyecto_2_edd;
 
-class NodoArbol {
-
-    String nombre;
-    NodoArbol[] hijo;
-    NodoArbol padre;
-    String madre; 
-
-    public NodoArbol(String nombre, int numHijo) {
-        this.nombre = nombre;
-        this.hijo = new NodoArbol[numHijo];
-        this.padre = null;
-        this.madre = madre;
-    }
-}
+//class NodoArbol {
+//
+//    String nombre;
+//    NodoArbol[] hijo;
+//    NodoArbol padre;
+//    String madre; 
+//
+//    public NodoArbol(String nombre, int numHijo) {
+//        this.nombre = nombre;
+//        this.hijo = new NodoArbol[numHijo];
+//        this.padre = null;
+//        this.madre = madre;
+//    }
+//}
 
 public class Arbol<T> implements A_Arbol<T> {
     
@@ -50,11 +50,11 @@ public class Arbol<T> implements A_Arbol<T> {
     }
         
 
-    NodoArbol raiz;
-
-    public Arbol(String nombreRaiz, int numHijo) {
-        this.raiz = new NodoArbol(nombreRaiz, numHijo);
-    }
+//    NodoArbol raiz;
+//
+//    public Arbol(String nombreRaiz, int numHijo) {
+//        this.raiz = new NodoArbol(nombreRaiz, numHijo);
+//    }
     
     public Arbol() {
         this.hijos = new ListaEnlazada<>();
@@ -323,5 +323,8 @@ public class Arbol<T> implements A_Arbol<T> {
             txt += "\n";
         }
         return txt;
+    }
+    public static void main(String[] args) {
+
     }
 }

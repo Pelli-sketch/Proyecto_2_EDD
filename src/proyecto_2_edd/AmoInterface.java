@@ -9,6 +9,53 @@ package proyecto_2_edd;
  * @author pablo
  */
 public class AmoInterface extends javax.swing.JFrame {
+    
+    
+    /**
+     * Valor de caracteres maximos por linea
+     */
+    
+    private final int MAX_CHARACTERS_PER_LINE = 60;
+
+    /**
+     * Constructor de VentanaDetalleLord cuando se le pasa la ventana principal y el lord a usar
+     * 
+     * @param ventanaPrincipal la ventana principal de la interfaz
+     * @param lord el lord al cual se le van a mostrar los datos
+     */
+
+    public AmoInterface(MainInterface mainInterface, Amo amo) {
+        this.setLocationRelativeTo(mainInterface);
+        initComponents();
+        
+        String detalles = amo.DataImplementsToString().replace("\t\t", "|").replace("\t", "").replace("|", "\t");
+        String[] lines = detalles.split("\n");
+        this.jLabelTitleAmoInterface.setText(amo.fullName);
+        this.jTextAreaDetails.setText("");
+        for (int i = 1; i < lines.length; i++) {
+            if (lines[i].length() > MAX_CHARACTERS_PER_LINE) {
+                String[] innerStrings = lines[i].split(" ");
+                int tamLinea = 0;
+                for (int j = 0; j < innerStrings.length; j++) {
+                    tamLinea += innerStrings[j].length() + 1;
+                    if (tamLinea > MAX_CHARACTERS_PER_LINE) {
+                        this.jTextAreaDetails.append(innerStrings[j] + "\n\t");
+                        tamLinea = 0;
+                    } else {
+                        if (j == innerStrings.length - 1) {
+                            this.jTextAreaDetails.append(innerStrings[j] + "\n");
+                        } else {
+                            this.jTextAreaDetails.append(innerStrings[j] + " ");
+                        }
+                    }
+                }
+            } else {
+                this.jTextAreaDetails.append(lines[i] + "\n");
+            }
+
+        }
+    }
+  
 
     /**
      * Creates new form AmoInterface
@@ -26,21 +73,21 @@ public class AmoInterface extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabelTituloMainInterface = new javax.swing.JLabel();
+        jLabelTitleAmoInterface = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTextAreaDetails = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabelTituloMainInterface.setFont(new java.awt.Font("VALORANT", 1, 36)); // NOI18N
-        jLabelTituloMainInterface.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelTituloMainInterface.setText("amo");
-        jLabelTituloMainInterface.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED, java.awt.Color.black, java.awt.Color.black));
+        jLabelTitleAmoInterface.setFont(new java.awt.Font("VALORANT", 1, 36)); // NOI18N
+        jLabelTitleAmoInterface.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTitleAmoInterface.setText("amo");
+        jLabelTitleAmoInterface.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED, java.awt.Color.black, java.awt.Color.black));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("VALORANT", 0, 12)); // NOI18N
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jTextAreaDetails.setColumns(20);
+        jTextAreaDetails.setFont(new java.awt.Font("VALORANT", 0, 12)); // NOI18N
+        jTextAreaDetails.setRows(5);
+        jScrollPane1.setViewportView(jTextAreaDetails);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -49,7 +96,7 @@ public class AmoInterface extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelTituloMainInterface, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelTitleAmoInterface, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -57,7 +104,7 @@ public class AmoInterface extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelTituloMainInterface)
+                .addComponent(jLabelTitleAmoInterface)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
                 .addContainerGap())
@@ -102,8 +149,8 @@ public class AmoInterface extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabelTituloMainInterface;
+    private javax.swing.JLabel jLabelTitleAmoInterface;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextAreaDetails;
     // End of variables declaration//GEN-END:variables
 }

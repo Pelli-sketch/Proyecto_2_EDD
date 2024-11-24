@@ -67,7 +67,7 @@ public class CargarArchivo extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(aFileSelector, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
+            .addComponent(aFileSelector, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
         );
 
         pack();
@@ -92,9 +92,10 @@ public class CargarArchivo extends javax.swing.JFrame {
                 aFileSelector.setSelectedFile(selectedFile);
                 return;
             }
+            
+            this.mainInterface.setJLabelTitle(this.mainClass.controladorApp.casa.fullname);
             this.mainClass.controladorApp.Cargar_Arbol_and_Hash();
             this.mainClass.controladorApp.cargarArbolGraph((A_Arbol<Amo>) this.mainClass.controladorApp.arbolCasa);
-            this.mainInterface.setJLabelTitle(this.mainClass.controladorApp.casa.fullname);
             this.mainInterface.setVisible(true);
             dispose();
             return;
@@ -102,7 +103,7 @@ public class CargarArchivo extends javax.swing.JFrame {
         
     }//GEN-LAST:event_aFileSelectorActionPerformed
 
-    
+
     
     
     /**

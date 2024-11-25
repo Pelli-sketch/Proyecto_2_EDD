@@ -295,25 +295,25 @@ public class ControladorApp {
 
         // le damos el estilo al gráfico
         String css = "node {" +
-                " text-size: 16px;" + // Tamaño del texto
-                " text-font: Papyrus;" + // Define la fuente como Papyrus
-                " text-style: bold;" + // Texto en negrita
-                " text-alignment: center;" + // Texto centrado
-                " text-background-mode: plain;" + // Activa el fondo de texto
-                " text-background-color: #FFFFE0;" + // Color de fondo del texto (un tono claro de amarillo)
-                " text-padding: 5px;" + // Relleno alrededor del texto
+                " text-size: 14px;" + // Tamaño del texto
+                " text-font: Arial;" + // Define la fuente como Arial
+                " text-style: italic;" + // Texto en cursiva
+                " text-alignment: center;" + // Texto alineado al centro
+                " text-background-mode: rounded;" + // Activa el fondo de texto con bordes redondeados
+                " text-background-color: #E0FFFF;" + // Color de fondo del texto (un tono claro de cian)
+                " text-padding: 8px;" + // Relleno alrededor del texto
 
-                " fill-color: #F0E68C;" + // Color de relleno del nodo (un tono más oscuro de amarillo)
-                " stroke-mode: plain;" + // Activa el borde del nodo
-                " stroke-color: black;" + // Color del borde
-                " shape: box;" + // Forma de los nodos como caja
+                " fill-color: #4682B4;" + // Color de relleno del nodo (un tono de azul)
+                " stroke-mode: solid;" + // Activa el borde del nodo
+                " stroke-color: #2F4F4F;" + // Color del borde (un tono oscuro de gris)
+                " shape: ellipse;" + // Forma de los nodos como elipse
                 " size-mode: fit;" + // Ajuste automático del tamaño del nodo
                 "}" +
                 "edge {" +
-                " shape: cubic-curve;" + // Forma de las aristas como curva cubica
-                " fill-color: gray;" + // Color de relleno de las aristas
-                " stroke-mode: plain;" + // Activa el borde de las aristas
-                // " stroke-width: 3px;" + // Ancho del borde de las aristas
+                " shape: line;" + // Forma de las aristas como línea recta
+                " fill-color: #B0C4DE;" + // Color de relleno de las aristas (un tono claro de azul)
+                " stroke-mode: dashed;" + // Borde de las aristas en forma de línea discontinua
+                " stroke-width: 2px;" + // Ancho del borde de las aristas
                 "}";
         this.graph.setAttribute("ui.stylesheet", css);
         this.graph.setAttribute("ui.antialias", true);

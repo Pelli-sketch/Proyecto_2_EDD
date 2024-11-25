@@ -8,6 +8,11 @@ package proyecto_2_edd;
  *
  * @author pablo
  */
+/**
+ * Clase Amo
+ * Representa a un "amo" con múltiples atributos relacionados con su identidad, casa, 
+ * características personales y relaciones familiares.
+ */
 public class Amo {
     
     public Amo() {
@@ -47,7 +52,12 @@ public class Amo {
     public static final String FATE_TITLE = "Fate";
     
     public boolean isValid = false;
-    
+    /**
+     * Analiza un string JSON y lo utiliza para inicializar los atributos del objeto.
+     * 
+     * @param json La cadena JSON a analizar.
+     * @return true si el análisis fue exitoso, false en caso contrario.
+     */    
     public boolean parse(String json) {
         if (json == null) {
             return false;
@@ -231,7 +241,11 @@ public class Amo {
         this.isValid = true;
         return true;
     }    
-    
+    /**
+     * Constructor que inicializa un objeto Amo con datos en formato JSON.
+     * 
+     * @param json La cadena JSON con los datos del Amo.
+     */    
     public Amo(String json) {
         this.isValid = false;
         if (!this.parse(json)) {
@@ -240,7 +254,12 @@ public class Amo {
         }
         this.isValid = true;
     }
-    
+    /**
+     * Método que compara dos objetos Amo para determinar si son iguales.
+     * 
+     * @param amo El objeto Amo a comparar.
+     * @return true si son iguales, false en caso contrario.
+     */
     public boolean equals(Amo amo) {
         if (amo == null) {
             return false;
@@ -255,6 +274,12 @@ public class Amo {
         }
         return false;
     }
+    
+    /**
+     * Genera una representación en cadena de los datos del objeto Amo.
+     * 
+     * @return Una cadena con los datos formateados.
+     */
     public String DataImplementsToString() {
         String txt = "";
         if (!this.isValid) {

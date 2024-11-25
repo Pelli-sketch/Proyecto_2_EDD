@@ -18,10 +18,10 @@ public class AmoInterface extends javax.swing.JFrame {
     private final int MAX_CHARACTERS_PER_LINE = 60;
 
     /**
-     * Constructor de VentanaDetalleLord cuando se le pasa la ventana principal y el lord a usar
+     * Constructor de AmoInterface cuando se le pasa la ventana principal y el lord a usar
      * 
-     * @param ventanaPrincipal la ventana principal de la interfaz
-     * @param lord el lord al cual se le van a mostrar los datos
+     * @param mainInterface la ventana principal de la interfaz
+     * @param amo el amo al cual se le van a mostrar los datos
      */
 
     public AmoInterface(MainInterface mainInterface, Amo amo) {

@@ -8,6 +8,10 @@ package proyecto_2_edd;
  *
  * @author pablo
  */
+/**
+ * Representa una casa con una lista dinámica de amos y funcionalidad para 
+ * procesar datos desde una cadena JSON.
+ */
 public class Casa {
     
     public final String HOUSE_TITLE = "House";
@@ -16,7 +20,12 @@ public class Casa {
     public String name = null;
     
     public ListaDinamica<Amo> amos;
-    
+    /**
+     * Procesa una cadena JSON para inicializar los datos de la casa y sus amos.
+     * 
+     * @param json la cadena JSON a procesar.
+     * @return true si el JSON fue procesado exitosamente, false en caso contrario.
+     */    
     public boolean parse(String json) {
         if (json == null) {
             return false;
@@ -104,7 +113,11 @@ public class Casa {
     public Casa() {
         this.amos = new ListaDinamica<>(15, 10);
     }
-    
+    /**
+     * Constructor que inicializa la lista de amos y procesa una cadena JSON.
+     * 
+     * @param json la cadena JSON que describe la casa y sus amos.
+     */    
     public Casa(String json) {
         this.amos = new ListaDinamica<>(15, 10);
         this.parse(json);
@@ -117,9 +130,9 @@ public class Casa {
     }
 
     /**
-     * Devuelve una representación en texto de la casa.
+     * Devuelve una representación textual de la casa y sus amos.
      * 
-     * @return una representación en texto de la casa
+     * @return una cadena que representa la casa y su lista de amos.
      */
     public String toString() {
         String txt = this.HOUSE_TITLE + ": " + this.name + "\n";

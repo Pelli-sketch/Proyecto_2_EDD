@@ -13,7 +13,12 @@ import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
 
+/**
+ * Clase principal que controla la aplicación para cargar y visualizar estructuras 
+ * de datos relacionadas con un árbol genealógico de una casa y sus amos.
+ */
 public class ControladorApp {
+
     
     public static final int GRAPH_WIDTH = 1000;
     
@@ -26,13 +31,20 @@ public class ControladorApp {
     Graph graph;
     
     public static final int GRAPH_HEIGHT = 1000;
-    
+    /**
+     * Constructor por defecto que inicializa los atributos principales.
+     */    
     public ControladorApp() {
         this.graph = new SingleGraph("Gene Tree of the house");
         this.casa = new Casa();
         this.arbolCasa = null;
     }
-    
+    /**
+     * Carga los datos de una casa desde un archivo JSON.
+     * 
+     * @param nombreArchivo el nombre del archivo JSON.
+     * @return true si la carga fue exitosa, false en caso contrario.
+     */    
     public boolean cargarCasa(String nombreArchivo) {
         String json = this.lectorJson.cargar(nombreArchivo);
         if (!this.casa.parse(json)) {
@@ -48,13 +60,25 @@ public class ControladorApp {
     public Casa getCasa() {
         return this.casa;
     }
-    
+    /**
+     * Obtiene la tabla hash para buscar por nombre único.
+     * 
+     * @return la tabla hash de nombres únicos.
+     */    
     public HashTable<Arbol<Amo>> gethTNombreUnico() {
         return this.hTNombreUnico;
     }
+    /**
+     * Obtiene la tabla hash para buscar por alias.
+     * 
+     * @return la tabla hash de alias.
+     */    
     public HashTable<Arbol<Amo>> getHTAlias() {
         return this.hTAlias;
     }
+    /**
+     * Construye el árbol genealógico y llena las tablas hash correspondientes.
+     */    
     public void Cargar_Arbol_and_Hash() {
         for (int i = 0; i < this.casa.amos.size(); i++) {
 
@@ -66,6 +90,8 @@ public class ControladorApp {
                             + " es Unknown y no es el primero de la lista.");
                 }
             }
+            
+            
 
             // creamos el sub-árbol del amo.
             Arbol<Amo> amoArbol = new Arbol<>(amo);
@@ -122,7 +148,6 @@ public class ControladorApp {
                 throw new RuntimeException("Error en la carga del árbol, hay mas de un padre de " + amo.name);
             }
             if (padres.size() == 1) {
-                // Si se encontró lo agregamos como hizo del padre encontrado.
                 Arbol<Amo> padre = (Arbol<Amo>) padres.obtener(0);
                 if (padre != null) {
                     padre.agregarHijo(amoArbol);
@@ -135,19 +160,15 @@ public class ControladorApp {
                     + " no se encuentra en el árbol.");
         }
     }
+    
     private void cargarArbolGraph(A_Arbol<Amo> amo, String fatherNodeId, int x, int y,
             int xStepSize,
             int yStepSize) {
 
-        // Si el padre es null, limpiamos el gráfico porque es la raiz.
         if (fatherNodeId == null) {
             this.graph.clear();
         }
 
-        // vamos a crear un id para el nodo en graph stream, con el cual luego sea
-        // posible hacer la búsqueda en el hash ya sea por nombre único o por alias
-        // usamos el formato: nombreUnico:alias. Así cuando tenga un nodo hago un
-        // split por el ":" y luego lo busco en el hashTable correspondiente.
         String nombreUnico = amo.obtenerValor().nombreUnico;
         if (nombreUnico == null) {
             nombreUnico = "";
@@ -161,55 +182,36 @@ public class ControladorApp {
             name = "";
         }
         String nodeId = nombreUnico + ":" + alias;
-
-        // asigno el nodeId para crear el nodo y le asigno como etiqueta el nombre,
-        // ya que es más corto y permite ver mejor a los nodos del árbol en su
-        // representación en graphStream.
         Node node = this.graph.addNode(nodeId);
         node.setAttribute("ui.label", name);
-
-        // Le asigno su posición dentro de la cuadricula que se creó para que el grafo
-        // tenga forma de árbol genealógico.
         node.setAttribute("xy", x, y);
 
-        // Se crea la arista y se le da un id representativo, aunque en este proyecto
-        // el id de la arista no se usa.
         if (fatherNodeId != null) {
             this.graph.addEdge(fatherNodeId + "->" + nodeId, fatherNodeId, nodeId);
         }
 
-        // Obtengo los hijos del subarbol que estoy recorriendo.
         ListaEnlazada<A_Arbol<Amo>> hijos = amo.obtenerHijos();
 
-        // Si no tiene hijos, se termina la recursividad.
         if (hijos.vacia()) {
             return;
         }
-
-        // Se calcula el nodo mas a la izquierda para que todos queden centrados con
-        // respecto a su padre. Llamamos a este valor xOffset. Como va a la izquierda
-        // en el plano cartesiano, el signo es negativo.
         int xOffset = -1 * ((int) hijos.size() / 2) * xStepSize;
         x = x + xOffset;
         for (int i = 0; i < hijos.size(); i++) {
-            // a cada hijo se lo llama recursivamente con un y al que se le resta yStepSize,
-            // para que este por debajo de su padre, y el x calculado sumándole al x el
-            // xStepSize, así cada hijo se va a ir moviendo hacia la derecha y todos
-            // centrados con respecto a su padre.
             this.cargarArbolGraph(hijos.obtener(i), nodeId, x, y - yStepSize, xStepSize, yStepSize);
             x += xStepSize;
         }
     }
     public void cargarArbolGraph(A_Arbol<Amo> amo) {
-        // Obtengo los levels del árbol, para poder calcular los xStepSize y yStepSize.
         ListaEnlazada<A_Arbol<Amo>>[] levels = amo.obtenerLevels();
         int numLevels = levels.length;
-
-        // Calculo los xStepSize y yStepSize
         int yStepSize = ControladorApp.GRAPH_HEIGHT / numLevels;
         int maxNumGen = 0;
-        // el mayor número de hijos de todos los levels
-        // para calcular el xStepSize
+        
+        if (amo == null) {
+            throw new IllegalArgumentException("El árbol proporcionado (amo) es null.");//Verifica la carga de datos.
+        }
+
         for (int i = 0; i < levels.length; i++) {
             if (levels[i].size() > maxNumGen) {
                 maxNumGen = levels[i].size();
@@ -217,10 +219,10 @@ public class ControladorApp {
         }
         int xStepSize = ControladorApp.GRAPH_WIDTH / maxNumGen;
 
-        // ahora hago la llamada recursiva para cargar el grafo de graphStream.
+
         this.cargarArbolGraph(amo, null, 0, 0, xStepSize, yStepSize);
 
-        // Y le doy estilo a los nodos y aristas
+
         String css = "node {" +
                 " text-size: 16px;" + // Tamaño del texto
                 " text-font: Papyrus;" + // Define la fuente como Papyrus
@@ -256,20 +258,12 @@ public class ControladorApp {
             return;
         }
 
-        // necesitamos un arreglo de ids de nodos para los antepasados
-        // al igual que con el cargarArbolGraph, los ids serán nombreUnico:alias
-        // ya que me permite poder hacer luego busquedas en el hashTable
-        // ya sea por nombreUnico o por alias haciendo solamente un split
-        // de nombreUnico:alias por el ":".
 
         String[] nodeIds = new String[antepasados.size()];
         int numAntepasados = antepasados.size();
 
-        // Calculamos el yStepSize para que los nodos estén equidistantes.
         int yStepSize = ControladorApp.GRAPH_HEIGHT / numAntepasados;
         for (int i = 0, y = 0; i < antepasados.size(); i++, y -= yStepSize) {
-
-            // calculo los nodeIds
             String nombreUnico = antepasados.obtener(i).obtenerValor().nombreUnico;
             if (nombreUnico == null) {
                 nombreUnico = "";
@@ -288,11 +282,8 @@ public class ControladorApp {
             // creo el nodo con el nodeId
             Node node = this.graph.addNode(nodeId);
 
-            // pero la etiqueta (label) lo hago con el name
             node.setAttribute("ui.label", name);
-            // y le doy su ubicación en el gráfico, ver que el for, decrementa
-            // el valor de y en yStepSize en cada iteración, de esta forma los hijos
-            // están por debajo de los padres
+
             node.setAttribute("xy", 0, y);
         }
         for (int i = 0; i < nodeIds.length - 1; i++) {

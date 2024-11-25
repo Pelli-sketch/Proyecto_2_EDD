@@ -14,11 +14,18 @@ package proyecto_2_edd;
 //        this.madre = madre;
 //    }
 //}
-
+/**
+ * Implementación de un árbol genérico con soporte para nodos múltiples.
+ * @param <T> el tipo de dato almacenado en cada nodo del árbol.
+ */
 public class Arbol<T> implements A_Arbol<T> {
-    
+    /**
+     * Comparador estático para objetos de tipo {@code String}.
+     */    
     private static AComparador<String> comparadorString = (String a, String b) -> a.compareTo(b);
-    
+    /**
+     * Comparador estático para objetos de tipo {@code Number}.
+     */    
     private static AComparador<Number> comparadorNumber = (Number a, Number b) -> {
         Double num1 = a.doubleValue();
         Double num2 = b.doubleValue();
@@ -30,7 +37,10 @@ public class Arbol<T> implements A_Arbol<T> {
     private ListaEnlazada<A_Arbol<T>> hijos;
     
     private AComparador<T> comparador;
-    
+    /**
+     * Determina automáticamente el comparador para el tipo {@code T}.
+     * Utiliza comparadores predefinidos para {@code String} y {@code Number}.
+     */    
     @SuppressWarnings("unchecked")
     private void guessComparador() {
         if (comparador != null) {
@@ -55,11 +65,17 @@ public class Arbol<T> implements A_Arbol<T> {
 //    public Arbol(String nombreRaiz, int numHijo) {
 //        this.raiz = new NodoArbol(nombreRaiz, numHijo);
 //    }
-    
+    /**
+     * Inicializa el árbol sin valor y sin hijos.
+     */    
     public Arbol() {
         this.hijos = new ListaEnlazada<>();
     }
-    
+    /**
+     * Inicializa el árbol con un valor inicial.
+     * 
+     * @param valor el valor inicial del nodo.
+     */    
     public Arbol(T valor) {
         this.valor = valor;
         this.hijos = new ListaEnlazada<>();

@@ -6,12 +6,6 @@
 - Sebastián Marval  
 
 ---
-## Descripción del Diagrama de Clases
-
-
-
-
----
 
 ## Descripción del Proyecto
 

@@ -50,10 +50,11 @@ public class MainInterface extends javax.swing.JFrame implements ViewerListener,
     }
     
     /**
-     * Constructor de MainInterface cuando se le pasa el main del programa
-     * 
-     * @param mainClass la clase main del programa
-     */    
+     * Constructor principal que recibe la clase principal de la aplicación.
+     * Configura la ventana e inicializa los componentes de interacción con el grafo.
+     *
+     * @param mainClass la clase principal de la aplicación.
+     */
     public MainInterface(MainApp mainClass) {
         System.setProperty("org.graphstream.ui", "swing");
         setLocationRelativeTo(null);
@@ -73,10 +74,11 @@ public class MainInterface extends javax.swing.JFrame implements ViewerListener,
 //        this.setJLabelTitle("House");
         this.configVistaGraph();
     }    
+    // --- Métodos principales ---
     /**
-     * Metodo para configurar la vista gráfica
+     * Configura la vista gráfica para la visualización del grafo.
+     * Desactiva el diseño automático y agrega el visor al panel principal.
      */
-
     private void configVistaGraph() {
         viewer = (SwingViewer) new SwingViewer(graph, SwingViewer.ThreadingModel.GRAPH_IN_GUI_THREAD);
         viewer.disableAutoLayout();
@@ -87,9 +89,9 @@ public class MainInterface extends javax.swing.JFrame implements ViewerListener,
     }
 
     /**
-     * Metodo para manejar los eventos del mouse
+     * Configura el manejo de eventos del mouse en el grafo.
+     * Utiliza un ViewerPipe para capturar eventos y ejecuta un bucle en un hilo separado.
      */
-
     private void ControlMouse() {
         ViewerPipe fromViewer = viewer.newViewerPipe();
         fromViewer.addViewerListener(this);
@@ -108,23 +110,22 @@ public class MainInterface extends javax.swing.JFrame implements ViewerListener,
     }
 
     /**
-     * Metodo para cerrar la ventana
-     * 
-     * @param viewName el nombre de la ventana
+     * Método llamado al cerrar la vista gráfica.
+     * Detiene el bucle de eventos.
+     *
+     * @param viewName el nombre de la vista cerrada.
      */
-
     @Override
     public void viewClosed(String viewName) {
         loop = false;
     }
 
     /**
-     * Metodo para manejar los eventos de un nodo o lord del arbol cuando se
-     * presiona
-     * 
-     * @param id el id del nodo o lord
+     * Maneja el evento de presionar un nodo en el grafo.
+     * Establece el nodo seleccionado.
+     *
+     * @param id el identificador del nodo.
      */
-
     @Override
     public void buttonPushed(String id) {
         Node node = graph.getNode(id);
@@ -134,12 +135,11 @@ public class MainInterface extends javax.swing.JFrame implements ViewerListener,
     }
 
     /**
-     * Metodo para manejar los eventos de un nodo o lord del arbol
-     * cuando se mantiene presionado.
-     * 
-     * @param id el id del nodo o lord
+     * Maneja el evento de liberar un nodo presionado.
+     * Si hay un nodo seleccionado, obtiene los detalles del amo asociado.
+     *
+     * @param id el identificador del nodo.
      */
-
     @Override
     public void buttonReleased(String id) {
         Node node = graph.getNode(id);
@@ -180,22 +180,20 @@ public class MainInterface extends javax.swing.JFrame implements ViewerListener,
         // Manejar el movimiento del mouse sobre un nodo
         // Se deja vacio para cumplir con la interfaz
     }
-
     /**
-     * Metodo para configurar el titulo de la ventana
-     * 
-     * @param titleString el titulo de la ventana
+     * Actualiza el título de la ventana principal.
+     *
+     * @param titleString el nuevo título.
      */
-
     public void setJLabelTitle(String titleString) {
         this.jLabelTitleMainInterface.setText(titleString);
         this.jLabelTitleMainInterface.setVisible(true);
     }
 
     /**
-     * Metodo para resetear la ventana.
+     * Restaura los valores iniciales de los componentes de la ventana.
+     * Recarga el grafo si se ha actualizado.
      */
-
     public void reloadWindow() {
         if (this.controladorApp.arbolCasa == null) {
             return;
@@ -276,12 +274,12 @@ public class MainInterface extends javax.swing.JFrame implements ViewerListener,
     }
 
     /**
-     * Metodo para mostrar la ventana de detalle de un amo
-     * 
-     * @param amoString el nombre o alias del amo
-     * @return el arbol del amo que se busca
+     * Busca un amo en las tablas hash por nombre único o alias.
+     * Si lo encuentra, muestra una nueva ventana con sus detalles.
+     *
+     * @param amoString el identificador del amo.
+     * @return el árbol asociado al amo encontrado.
      */
-
     public Arbol<Amo> getAmoInterface(String amoString) {
         String[] amoNombreUnico_Alias = amoString.split(":");
         String amoNombreUnico = amoNombreUnico_Alias[0].strip();

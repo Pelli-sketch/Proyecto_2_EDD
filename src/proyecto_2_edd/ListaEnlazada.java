@@ -9,10 +9,13 @@ package proyecto_2_edd;
  * @author pablo
  */
 public class ListaEnlazada<T> implements Alist<T> {
-
+    /**
+     * Clase Nodo de la Lista.
+     */
     @SuppressWarnings("hiding")
     private class Nodo<T> {
         T valor;
+
         Nodo<T> siguiente;
 
         Nodo(T valor) {
@@ -22,19 +25,52 @@ public class ListaEnlazada<T> implements Alist<T> {
 
         @Override
         public String toString() {
-            StringBuilder txt = new StringBuilder();
-            txt.append(this.valor != null ? valor.toString() : "");
-            txt.append(this.siguiente != null ? " -> " : " -> //");
-            return txt.toString();
+            String txt = "";
+            if (this.valor == null) {
+                txt += "";
+            } else {
+                txt += String.valueOf(valor);
+            }
+            if (this.siguiente != null) {
+                txt += " -> ";
+            } else {
+                txt += " -> //";
+            }
+            return txt;
         }
     }
 
+    /**
+     * Atributos
+     * referencia al primer nodo de la lista.
+     *
+     * @see Nodo
+     */
     private Nodo<T> cabeza;
+
+    /**
+     * referencia al ultimo nodo de la lista
+     */
     private Nodo<T> cola;
+
+    /**
+     * indice del nodo en cache
+     */
     private Integer cachedIndex;
+
+    /**
+     * nodo en cache
+     */
     private Nodo<T> cachedNodo;
+
+    /**
+     * tamaño de la lista.
+     */
     private int tam;
 
+    /**
+     * Constructor
+     */
     public ListaEnlazada() {
         this.cabeza = null;
         this.cola = null;
@@ -43,6 +79,13 @@ public class ListaEnlazada<T> implements Alist<T> {
         this.cachedNodo = null;
     }
 
+    /**
+     * Constructor con un arreglo de elementos. Crea la lista
+     * con todos los elementos del arreglo agregados, en el
+     * mismo orden.
+     *
+     * @param valores
+     */
     public ListaEnlazada(T[] valores) {
         for (T item : valores) {
             this.agregar(item);
@@ -51,6 +94,13 @@ public class ListaEnlazada<T> implements Alist<T> {
         this.cachedNodo = null;
     }
 
+    /**
+     * Constructor con una lista de elementos. Crea la lista
+     * con todos los elementos de la lista agregados, en el
+     * mismo orden.
+     *
+     * @param valores
+     */
     public ListaEnlazada(Alist<T> valores) {
         for (int i = 0; i < valores.size(); i++) {
             this.agregar(valores.obtener(i));
@@ -59,340 +109,527 @@ public class ListaEnlazada<T> implements Alist<T> {
         this.cachedNodo = null;
     }
 
-    @Override
-    public boolean vacia() {
-        return tam == 0;
-    }
-
+    /**
+     * Devuelve el tamaño de la lista.
+     *
+     * @return el tamaño de la lista.
+     */
     @Override
     public int size() {
-        return tam;
+        return this.tam;
     }
 
-    protected int convertirIndice(int indice) {
-        return (indice < 0 && indice >= -tam) ? tam + indice : indice;
+    /**
+     * Verifica si la lista esta vacía.
+     *
+     * @return true si la lista esta vacía, false en caso contrario.
+     */
+    @Override
+    public boolean vacia() {
+        return this.tam == 0;
     }
 
-    public boolean insertar(int indice, T valor) {
-        indice = convertirIndice(indice);
-        if (indice < 0 || indice > tam) {
+    /**
+     * Transforma valores negativo de un index, para ser usado desde la cola hacia
+     * la cabeza de la lista. en este caso si el indice es igual a -1 entonces
+     * es igual a: size() - 1 (El ultimo indice de la lista).
+     *
+     * @param index el indice a transformar
+     * @return el indice transformado.
+     */
+    protected int transformarIndex(int index) {
+        if (index < 0 && index >= -this.tam) {
+            return this.tam + index;
+        }
+        return index;
+    }
+
+    /**
+     * Inserta el valor en la posición indicada. Si el indice es
+     * negativo, usa transformarIndex para recorrer la lista desde la cola hacia
+     * la cabeza. @see transformarIndex
+     *
+     * @param index posición en la lista.
+     * @param valor valor a insertar.
+     * @return true si el valor fue insertado, false en caso contrario.
+     */
+    public boolean insertar(int index, T valor) {
+        index = transformarIndex(index);
+        if (index < 0 || index > this.tam) {
             return false;
         }
-
-        Nodo<T> nuevoNodo = new Nodo<>(valor);
-        if (vacia()) {
-            cabeza = nuevoNodo;
-            cola = nuevoNodo;
-            cachedIndex = 0;
-            cachedNodo = nuevoNodo;
-            tam++;
+        Nodo<T> nodo = new Nodo<>(valor);
+        nodo.siguiente = null;
+        if (this.vacia()) {
+            this.cabeza = nodo;
+            this.cola = nodo;
+            this.cachedIndex = 0;
+            this.cachedNodo = nodo;
+            this.tam++;
             return true;
         }
 
-        if (indice == 0) {
-            nuevoNodo.siguiente = cabeza;
-            cabeza = nuevoNodo;
-            cachedIndex = 0;
-            cachedNodo = nuevoNodo;
-            tam++;
+        if (index == 0) {
+            nodo.siguiente = this.cabeza;
+            this.cabeza = nodo;
+            this.cachedIndex = 0;
+            this.cachedNodo = nodo;
+            this.tam++;
             return true;
         }
-
-        if (indice == tam) {
-            cola.siguiente = nuevoNodo;
-            cola = nuevoNodo;
-            tam++;
+        if (index == this.tam) {
+            this.cola.siguiente = nodo;
+            this.cola = nodo;
+            this.tam++;
             return true;
         }
 
         Nodo<T> aux;
         int i;
-        if (cachedIndex == null || indice < cachedIndex - 1) {
-            aux = cabeza;
+        if (this.cachedIndex == null || (index < this.cachedIndex - 1)) {
+            aux = this.cabeza;
             i = 0;
         } else {
-            aux = cachedNodo;
-            i = cachedIndex;
+            aux = this.cachedNodo;
+            i = this.cachedIndex;
         }
-
-        for (; i < indice - 1; i++) {
+        for (; i < index - 1; i++) {
             aux = aux.siguiente;
         }
-
-        nuevoNodo.siguiente = aux.siguiente;
-        aux.siguiente = nuevoNodo;
-        cachedIndex = indice;
-        cachedNodo = nuevoNodo;
-        tam++;
+        nodo.siguiente = aux.siguiente;
+        aux.siguiente = nodo;
+        this.cachedIndex = index;
+        this.cachedNodo = nodo;
+        this.tam++;
         return true;
     }
-    
+
+    /**
+     * Inserta el valor al final de la lista.
+     *
+     * @param valor el valor a insertar.
+     * @return true si el valor fue insertado, false en caso contrario.
+     */
     @Override
     public boolean agregar(T valor) {
         return insertar(size(), valor);
     }
 
-    public void agregarDesdeArreglo(T[] valores) {
-        for (T valor : valores) {
-            agregar(valor);
+    /**
+     * Agrega un array de elementos a la lista.
+     * 
+     * @param valor el array
+     */
+    @Override
+    public void agregarDesdeArreglo(T[] valor) {
+        for (int i = 0; i < valor.length; i++) {
+            this.agregar(valor[i]);
         }
     }
 
-    public void agregarDesdeLista(Alist<T> listaa) {
-        for (int i = 0; i < listaa.size(); i++) {
-            agregar(listaa.obtener(i));
+    /**
+     * Agrega una lista de elementos a la lista.
+     * 
+     * @param valor la lista a agregar
+     */
+    public void agregarDesdeLista(Alist<T> valor) {
+        for (int i = 0; i < valor.size(); i++) {
+            this.agregar(valor.obtener(i));
         }
     }
 
-    public T obtener(int indice) {
-        if (vacia()) {
-            reactualizarCache();
-            return null;
-        }
-        indice = convertirIndice(indice);
-        if (indice < 0 || indice >= tam) {
-            return null;
-        }
-        if (indice == tam - 1) {
-            return cola.valor;
-        }
-    
-        Nodo<T> nodo = (cachedIndex == null || indice < cachedIndex) ? cabeza : cachedNodo;
-        int i = (cachedIndex == null || indice < cachedIndex) ? 0 : cachedIndex;
+    /**
+     * Devuelve el valor del elemento en la posición indicada o null si hay un
+     * error. Si el indice es negativo, usa transformarIndex para recorrer
+     * la lista desde la cola hacia la cabeza. @see transformarIndex
+     * 
+     * @param index posición en la lista.
+     * 
+     * @return el valor del elemento o null si hay un error.
+     */
 
-        while (i < indice) {
+    public T obtener(int index) {
+        if (this.vacia()) {
+            this.cachedIndex = null;
+            this.cachedNodo = null;
+            return null;
+        }
+        index = transformarIndex(index);
+        if (index < 0 || index >= this.tam) {
+            return null;
+        }
+        if (index == this.tam - 1) {
+            return this.cola.valor;
+        }
+        Nodo<T> nodo = cabeza;
+        int i;
+        if (this.cachedIndex == null || (index < this.cachedIndex)) {
+            nodo = this.cabeza;
+            i = 0;
+        } else {
+            nodo = this.cachedNodo;
+            i = this.cachedIndex;
+        }
+        for (; i < index; i++) {
             nodo = nodo.siguiente;
-            i++;
         }
-    
-        updateCache(indice, nodo);
+        this.cachedIndex = index;
+        this.cachedNodo = nodo;
         return nodo.valor;
     }
 
+    /**
+     * Modifica el valor del elemento en la posición indicada. Si el indice es
+     * negativo, usa transformarIndex para recorrer la lista desde la cola hacia
+     * la cabeza. @see transformarIndex. Devuelve true si el valor fue
+     * modificado, false en caso contrario.
+     * 
+     * @param index posición en la lista.
+     * @param valor el nuevo valor del elemento.
+     * 
+     * @return true si el valor fue modificado, false en caso contrario.
+     */
+
     @Override
-    public boolean actualizar(int indice, T valor) {
-        if (vacia()) {
-            reactualizarCache();
+    public boolean actualizar(int index, T valor) {
+        if (this.vacia()) {
+            this.cachedIndex = null;
+            this.cachedNodo = null;
             return false;
         }
-        indice = convertirIndice(indice);
-        if (indice < 0 || indice >= tam) {
+        index = transformarIndex(index);
+        if (index < 0 || index >= this.tam) {
             return false;
         }
-        if (indice == tam - 1) {
-            cola.valor = valor;
+        if (index == this.tam - 1) {
+            this.cola.valor = valor;
             return true;
         }
-
-        Nodo<T> nodo = (cachedIndex == null || indice < cachedIndex) ? cabeza : cachedNodo;
-        int i = (cachedIndex == null || indice < cachedIndex) ? 0 : cachedIndex;
-
-        while (i < indice) {
+        Nodo<T> nodo = this.cabeza;
+        int i;
+        if (this.cachedIndex == null || (index < this.cachedIndex)) {
+            nodo = this.cabeza;
+            i = 0;
+        } else {
+            nodo = this.cachedNodo;
+            i = this.cachedIndex;
+        }
+        for (; i < index; i++) {
             nodo = nodo.siguiente;
-            i++;
         }
-    
         nodo.valor = valor;
-        updateCache(indice, nodo);
+        this.cachedIndex = index;
+        this.cachedNodo = nodo;
         return true;
-    }   
+    }
 
-    public T eliminar(int indice) {
-        if (vacia()) {
-            reactualizarCache();
+    /**
+     * Elimina el elemento en la posición indicada. Devuelve el valor del elemento
+     * eliminado o null si hay un error.
+     * Si el indice es negativo, usa transformarIndex para recorrer la lista desde
+     * la cola hacia la cabeza. @see transformarIndex
+     * 
+     * @param index posición en la lista.
+     * 
+     * @return el valor del elemento eliminado o null si hay un error.
+     */
+
+    @Override
+    public T eliminar(int index) {
+        if (this.vacia()) {
+            this.cachedIndex = null;
+            this.cachedNodo = null;
             return null;
         }
-        indice = convertirIndice(indice);
-        if (indice < 0 || indice >= tam) {
+        index = transformarIndex(index);
+        if (index < 0 || index >= this.tam) {
             return null;
         }
-
         Nodo<T> aux;
-        if (indice == 0) {
-            aux = cabeza;
-            cabeza = cabeza.siguiente;
-            if (cabeza == null) {
-                cola = null;
+        if (index == 0) {
+            aux = this.cabeza;
+            this.cabeza = this.cabeza.siguiente;
+            if (this.cabeza == null) {
+                this.cola = null;
             }
-            tam--;
-            reactualizarCache();
+            aux.siguiente = null;
+            this.tam--;
+            this.cachedIndex = null;
+            this.cachedNodo = null;
             return aux.valor;
         }
-
-        aux = (cachedIndex == null || indice < cachedIndex - 1) ? cabeza : cachedNodo;
-        int i = (cachedIndex == null || indice < cachedIndex - 1) ? 0 : cachedIndex;
-
-        while (i < indice - 1) {
+        aux = this.cabeza;
+        int i;
+        if (this.cachedIndex == null || (index < this.cachedIndex - 1)) {
+            aux = this.cabeza;
+            i = 0;
+        } else {
+            aux = this.cachedNodo;
+            i = this.cachedIndex;
+        }
+        for (; i < index - 1; i++) {
             aux = aux.siguiente;
-            i++;
         }
-
         Nodo<T> nodo = aux.siguiente;
-        if (nodo == cola) {
-            cola = aux;
+        if (nodo == this.cola) {
+            this.cola = aux;
         }
-        aux.siguiente = nodo.siguiente;
-        reactualizarCache();
-        tam--;
+        aux.siguiente = aux.siguiente.siguiente;
+        this.cachedIndex = null;
+        this.cachedNodo = null;
+        this.tam--;
         nodo.siguiente = null;
         return nodo.valor;
     }
 
-    private void reactualizarCache() {
-        cachedIndex = null;
-        cachedNodo = null;
-    }
-
-    private void updateCache(int indice, Nodo<T> nodo) {
-        cachedIndex = indice;
-        cachedNodo = nodo;
-    }
-    
+    /**
+     * Elimina todos los elementos de la lista
+     */
     @Override
     public void vaciarLista() {
-        if (vacia()) {
-            cachedIndex = null;
-            cachedNodo = null;
-        } else {
-            Nodo<T> nodo = cabeza;
-            while (nodo != null) {
-                Nodo<T> siguiente = nodo.siguiente;
-                nodo.siguiente = null;
-                nodo = siguiente;
-            }
-            cabeza = null;
-            tam = 0;
-            cachedIndex = null;
-            cachedNodo = null;
+        if (this.vacia()) {
+            this.cachedIndex = null;
+            this.cachedNodo = null;
+            return;
         }
+        Nodo<T> nodo = this.cabeza;
+        Nodo<T> siguiente;
+        while (nodo != null) {
+            siguiente = nodo.siguiente;
+            nodo.siguiente = null;
+            nodo = siguiente;
+        }
+        this.cabeza = null;
+        this.tam = 0;
+        this.cachedIndex = null;
+        this.cachedNodo = null;
     }
 
+    /**
+     * Copia la lista en una nueva lista.
+     *
+     * @return la nueva lista.
+     */
     @Override
     public ListaEnlazada<T> copiarLista() {
         ListaEnlazada<T> copia = new ListaEnlazada<>();
-        if (!vacia()) {
-            Nodo<T> nodo = cabeza;
-            while (nodo != null) {
-                copia.agregar(nodo.valor);
-                nodo = nodo.siguiente;
-            }
+        if (this.vacia()) {
+            return copia;
+        }
+        Nodo<T> nodo = this.cabeza;
+        T valor;
+        while (nodo != null) {
+            valor = nodo.valor;
+            copia.agregar(valor);
+            nodo = nodo.siguiente;
         }
         return copia;
     }
 
+    /**
+     * Compara si la lista enviada por parámetro es igual a la lista actual.
+     * Usa un comparador para comparar los elementos de ambas listas.
+     * 
+     * @param list       la lista a comparar.
+     * @param comparador una expresión lambda con el comparador. @see IComparador
+     * 
+     * @return true si son iguales, false en caso contrario
+     */
     @Override
-    public boolean sonIguales(Alist<T> lista, AComparador<T> comparador) {
-        if (lista == null || tam != lista.size()) {
+    public boolean sonIguales(Alist<T> list, AComparador<T> comparador) {
+        if (list == null) {
             return false;
         }
-        if (this == lista || tam == 0) {
+        if (this.tam != list.size()) {
+            return false;
+        }
+        if (this == list) {
             return true;
         }
-        for (int i = 0; i < tam; i++) {
-            if (comparador.compareTo(obtener(i), lista.obtener(i)) != 0) {
+        if (this.tam == 0) {
+            return true;
+        }
+        for (int i = 0; i < this.tam; i++) {
+            if (comparador.compareTo(this.obtener(i), list.obtener(i)) != 0) {
                 return false;
             }
         }
         return true;
     }
 
-    public boolean sonIguales(Alist<T> lista) {
-        if (lista == null || tam != lista.size()) {
+    /**
+     * Compara si la lista enviada por parámetro es igual a la lista actual.
+     * Sirve solo si los elementos de la lista son de tipo String o Number.
+     * Si son de otro tipo devuelve false. En este caso deberías usar
+     * equals(IList,IComparador). @see equals(IList, IComparador)
+     * 
+     * @param list la lista a comparar
+     * 
+     * @return true si son iguales, false en caso contrario
+     */
+    public boolean sonIguales(Alist<T> list) {
+        if (list == null) {
             return false;
         }
-        if (obtener(0) instanceof String && lista.obtener(0) instanceof String) {
-            return sonIguales(lista, (a, b) -> ((String) a).compareTo((String) b));
+        if (this.tam != list.size()) {
+            return false;
         }
-        if (obtener(0) instanceof Number && lista.obtener(0) instanceof Number) {
-            return sonIguales(lista, (a, b) -> Double.compare(((Number) a).doubleValue(), ((Number) b).doubleValue()));
+        if (this.obtener(0) instanceof String && list.obtener(0) instanceof String) {
+            return this.sonIguales(list, (a, b) -> ((String) a).compareTo((String) b));
+        }
+        if (this.obtener(0) instanceof Number && list.obtener(0) instanceof Number) {
+            return this.sonIguales(list, (a, b) -> {
+                Double num1 = ((Number) a).doubleValue();
+                Double num2 = ((Number) b).doubleValue();
+                return num1.compareTo(num2);
+            });
         }
         return false;
     }
 
+    /**
+     * Ordena la lista según el comparador indicado.
+     * 
+     * @param comparador expresión lambda con el comparador @see IComparador
+     * 
+     */
     public void ordenarLista(AComparador<T> comparador) {
-        if (tam <= 1) {
-            cachedIndex = null;
-            cachedNodo = null;
+        if (this.tam == 0 || this.tam == 1) {
+            this.cachedIndex = null;
+            this.cachedNodo = null;
             return;
         }
-        for (int i = 0; i < size(); i++) {
-            for (int j = i + 1; j < size(); j++) {
-                if (comparador.compareTo(obtener(i), obtener(j)) > 0) {
-                    T aux = obtener(i);
-                    actualizar(i, obtener(j));
-                    actualizar(j, aux);
+        T aux = null;
+        for (int i = 0; i < this.size(); i++) {
+            for (int j = i + 1; j < this.size(); j++) {
+                if (comparador.compareTo(this.obtener(i), this.obtener(j)) > 0) {
+                    aux = this.obtener(i);
+                    this.actualizar(i, this.obtener(j));
+                    this.actualizar(j, aux);
                 }
             }
         }
-        cachedIndex = null;
-        cachedNodo = null;
+        this.cachedIndex = null;
+        this.cachedNodo = null;
     }
 
+    /**
+     * Ordena la lista si los elementos de la lista son de tipo String o Number
+     * No ordena si la lista tiene elementos de otro tipo. Usar ordenar(IComparador)
+     * para estos casos. @see ordenar(IComparador)
+     */
     public void ordenar() {
-        if (tam <= 1) {
-            cachedIndex = null;
-            cachedNodo = null;
+        if (this.tam == 0 || this.tam == 1) {
+            this.cachedIndex = null;
+            this.cachedNodo = null;
             return;
         }
-        if (obtener(0) instanceof String) {
-            ordenarLista((a, b) -> ((String) a).compareTo((String) b));
-        } else if (obtener(0) instanceof Number) {
-            ordenarLista((a, b) -> Double.compare(((Number) a).doubleValue(), ((Number) b).doubleValue()));
+        if (this.obtener(0) instanceof String) {
+            this.ordenarLista((a, b) -> ((String) a).compareTo((String) b));
+            return;
+        }
+        if (this.obtener(0) instanceof Number) {
+            this.ordenarLista((a, b) -> {
+                Double num1 = ((Number) a).doubleValue();
+                Double num2 = ((Number) b).doubleValue();
+                return num1.compareTo(num2);
+            });
+            return;
         }
     }
 
+    /**
+     * Invierte la lista
+     */
     public void invertir() {
-        if (tam <= 1) {
-            cachedIndex = null;
-            cachedNodo = null;
+        if (this.tam == 0 || this.tam == 1) {
+            this.cachedIndex = null;
+            this.cachedNodo = null;
             return;
         }
-        for (int i = 0; i < size() / 2; i++) {
-            T aux = obtener(i);
-            actualizar(i, obtener(size() - i - 1));
-            actualizar(size() - i - 1, aux);
+        T aux = null;
+        for (int i = 0; i < this.size() / 2; i++) {
+            aux = this.obtener(i);
+            this.actualizar(i, this.obtener(this.size() - i - 1));
+            this.actualizar(this.size() - i - 1, aux);
         }
-        cachedIndex = null;
-        cachedNodo = null;
+        this.cachedIndex = null;
+        this.cachedNodo = null;
     }
 
+    /**
+     * Busca un elemento en la lista y retorna su posición o -1 si no lo encuentra.
+     * Utiliza un comparador.
+     * 
+     * @param valor      el elemento a buscar
+     * @param comparador el comparador @see IComparador
+     * 
+     * @return la posición del elemento o -1
+     */
     public int buscarElemento(T valor, AComparador<T> comparador) {
-        for (int i = 0; i < tam; i++) {
-            if (comparador.compareTo(obtener(i), valor) == 0) {
+        for (int i = 0; i < this.tam; i++) {
+            if (comparador.compareTo(this.obtener(i), valor) == 0) {
                 return i;
             }
         }
         return -1;
     }
 
+    /**
+     * Busca un elemento en la lista y retorna su índice o -1 si no lo encuentra.
+     * No utiliza un comparador. Solo funciona para elementos de la lista que
+     * son de tipo String o Number. Si son de otro tipo devuelve -1. Usar
+     * buscar(T, IComparador) para estos casos. @see buscar(T, IComparador)
+     * 
+     * @param valor el elemento a buscar
+     * 
+     * @return la dirección del elemento o -1
+     */
     public int buscarElemento(T valor) {
-        if (tam == 0) {
+        if (this.tam == 0) {
             return -1;
         }
-        if (obtener(0) instanceof String && valor instanceof String) {
-            return buscarElemento(valor, (a, b) -> ((String) a).compareTo((String) b));
+        if (this.obtener(0) instanceof String && valor instanceof String) {
+            return this.buscarElemento(valor, (a, b) -> ((String) a).compareTo((String) b));
         }
-        if (obtener(0) instanceof Number && valor instanceof Number) {
-            return buscarElemento(valor, (a, b) -> Double.compare(((Number) a).doubleValue(), ((Number) b).doubleValue()));
+        if (this.obtener(0) instanceof Number && valor instanceof Number) {
+            return this.buscarElemento(valor, (a, b) -> {
+                Double num1 = ((Number) a).doubleValue();
+                Double num2 = ((Number) b).doubleValue();
+                return num1.compareTo(num2);
+            });
         }
         return -1;
     }
 
+    /**
+     * Devuelve una cadena de caracteres con la representación de la lista.
+     *
+     * @return una cadena de caracteres con la representación de la lista.
+     */
     @Override
     public String toString() {
-        StringBuilder txt = new StringBuilder("Lista(" + tam + "): ");
-        if (vacia()) {
-            txt.append("//");
-        } else {
-            Nodo<T> nodo = cabeza;
-            while (nodo != null) {
-                txt.append(nodo.toString());
-                nodo = nodo.siguiente;
-            }
+        String txt = "List(" + this.tam + "): ";
+        if (this.vacia()) {
+            txt += "//";
+            return txt;
         }
-        return txt.toString();
+        Nodo<T> nodo;
+        nodo = this.cabeza;
+        while (nodo != null) {
+            txt += nodo.toString();
+            nodo = nodo.siguiente;
+        }
+        return txt;
     }
 
-    
-    
+    /**
+     * Main por si se necesita probar algo directamente.
+     *
+     * @param args
+     */
+
+    public static void main(String args[]) {
+
+    }
 }
